@@ -55,6 +55,9 @@ public class ApplicationFrame extends JFrame implements ActionListener{
         if(e.getSource() == submit) {
             submit.setText("test");
         }
+        else{
+            submit.setText("Alexandre est un bouffon");
+        }
 
     }
 
