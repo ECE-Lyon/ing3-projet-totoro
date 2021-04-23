@@ -3,7 +3,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-import static java.awt.Component.LEFT_ALIGNMENT;
 
 public class ApplicationFrame extends JFrame implements ActionListener{
     JButton submit;
