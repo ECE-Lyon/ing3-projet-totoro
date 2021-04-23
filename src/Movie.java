@@ -1,11 +1,11 @@
 public class Movie {
     private String title;
-    private enum enumGenre {ACTION, AVENTURE}
-    private enumGenre genre;
+    private enum enumGenre {ACTION, AVENTURE, COMEDIE, FAMILLE, DRAME, CATASTROPHE, POLICIER, DOCUMENTAIRE, FANTASTIQUE, HISTORIQUE, HORREUR, COMEDIE_MUSICALE, SCIENCE_FICTION, THRILLER, WESTERN}
+    private enumGenre[] genre;
     private String date;
     private Integer time;
 
-    public Movie(String title, String date, Integer time, enumGenre genre) {
+    public Movie(String title, String date, Integer time, enumGenre[] genre) {
         this.title = title;
         this.date = date;
         this.time = time;
