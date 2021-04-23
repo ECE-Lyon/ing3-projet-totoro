@@ -9,14 +9,17 @@ public class ApplicationFrame extends JFrame implements ActionListener{
     MemberCustomers MC;
     JTextField login;
     JPasswordField password;
+    Container contentPane;
+    JPanel panelPrincipal;
+    JPanel panelMember;
     public ApplicationFrame() {
         setTitle("Réservation cinéma");
-        Container contentPane = getContentPane();
-        JPanel panelPrincipal = new JPanel();
+        contentPane = getContentPane();
+        panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new FlowLayout());
         JPanel panelGuest = new JPanel();
         panelGuest.setLayout(new GridLayout());
-        JPanel panelMember = new JPanel();
+        panelMember = new JPanel();
         panelMember.setLayout(new GridLayout(4,2));
 
         panelGuest.add(new JButton("Réserve sans te connecter"));
@@ -50,8 +53,9 @@ public class ApplicationFrame extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == submit) {
-            MC = new MemberCustomers(login.getText(), "j", MemberCustomers.enumCategorieAge.REGULAR);
+            submit.setText("test");
         }
+
     }
 
     public static void main(String[] args) {
