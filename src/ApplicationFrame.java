@@ -10,8 +10,7 @@ public class ApplicationFrame extends JFrame implements ActionListener {
     JTextField login;
     JPasswordField password;
     Container contentPane;
-    JPanel panelPrincipal;
-    JPanel panelMember;
+    JPanel panelPrincipal, panelMember;
 
     public ApplicationFrame() {
         setTitle("Réservation cinéma");
