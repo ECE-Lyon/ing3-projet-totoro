@@ -4,15 +4,15 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 
-public class ApplicationFrame extends JFrame implements ActionListener{
-    JButton submit;
-    JButton newAccount;
+public class ApplicationFrame extends JFrame implements ActionListener {
+    JButton submit, newAccount;
     MemberCustomers MC;
     JTextField login;
     JPasswordField password;
     Container contentPane;
     JPanel panelPrincipal;
     JPanel panelMember;
+
     public ApplicationFrame() {
         setTitle("Réservation cinéma");
         contentPane = getContentPane();
@@ -21,7 +21,7 @@ public class ApplicationFrame extends JFrame implements ActionListener{
         JPanel panelGuest = new JPanel();
         panelGuest.setLayout(new GridLayout());
         panelMember = new JPanel();
-        panelMember.setLayout(new GridLayout(4,2));
+        panelMember.setLayout(new GridLayout(4, 2));
 
         panelGuest.add(new JButton("Réserve sans te connecter"));
 
@@ -44,27 +44,24 @@ public class ApplicationFrame extends JFrame implements ActionListener{
         panelPrincipal.add(panelMember);
 
 
-        setSize(400,400);
+        setSize(400, 400);
         setVisible(true);
-
-
 
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == submit) {
+        if (e.getSource() == submit) {
             submit.setText("test");
         }
-
+        if (e.getSource() == newAccount) {
+            newAccount.setText(("bleh"));
+        }
     }
 
     public static void main(String[] args) {
         ApplicationFrame applicationFrame = new ApplicationFrame();
     }
 
-
-    }
-
-
+}
