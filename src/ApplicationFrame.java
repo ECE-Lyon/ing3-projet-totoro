@@ -10,7 +10,7 @@ public class ApplicationFrame extends JFrame implements ActionListener{
     JTextField login;
     JPasswordField password;
     public ApplicationFrame() {
-        setTitle("Reservation cinéma");
+        setTitle("Réservation cinéma");
         Container contentPane = getContentPane();
         JPanel panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new FlowLayout());
@@ -23,14 +23,14 @@ public class ApplicationFrame extends JFrame implements ActionListener{
 
         panelMember.add(new JLabel("Espace Membre"));
         panelMember.add(new JButton("Creer un nouveau compte"));
-        panelMember.add(new JLabel("Login : "));
+        panelMember.add(new JLabel("Identifiant : "));
         login = new JTextField();
         panelMember.add(login);
-        panelMember.add(new JLabel("Password : "));
+        panelMember.add(new JLabel("Mot de passe : "));
         password = new JPasswordField();
         panelMember.add(password);
         panelMember.add(new JLabel(""));
-        submit = new JButton("submit");
+        submit = new JButton("Soumettre");
         submit.addActionListener(this);
         panelMember.add(submit);
 
