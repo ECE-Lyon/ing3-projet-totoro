@@ -6,6 +6,7 @@ import javax.swing.*;
 
 public class ApplicationFrame extends JFrame implements ActionListener{
     JButton submit;
+    JButton newAccount;
     MemberCustomers MC;
     JTextField login;
     JPasswordField password;
@@ -25,7 +26,8 @@ public class ApplicationFrame extends JFrame implements ActionListener{
         panelGuest.add(new JButton("Réserve sans te connecter"));
 
         panelMember.add(new JLabel("Espace Membre"));
-        panelMember.add(new JButton("Creer un nouveau compte"));
+        newAccount = new JButton("Creer un nouveau compte");
+        panelMember.add(newAccount);
         panelMember.add(new JLabel("Identifiant : "));
         login = new JTextField();
         panelMember.add(login);
@@ -54,9 +56,6 @@ public class ApplicationFrame extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == submit) {
             submit.setText("test");
-        }
-        else{
-            submit.setText("Alexandre est un bouffon");
         }
 
     }
