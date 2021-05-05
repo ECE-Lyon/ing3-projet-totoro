@@ -22,7 +22,7 @@ public class ApplicationFrame extends JFrame implements ActionListener {
         panelMember = new JPanel();
         panelMember.setLayout(new GridLayout(4, 2));
 
-        panelGuest.add(new JButton("Réserve sans te connecter"));
+        panelGuest.add(new JButton("Réserver sans connection"));
 
         panelMember.add(new JLabel("Espace Membre"));
         newAccount = new JButton("Creer un nouveau compte");
@@ -50,11 +50,11 @@ public class ApplicationFrame extends JFrame implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == submit) {
+    public void actionPerformed(ActionEvent event) {
+        if (event.getSource() == submit) {
             submit.setText("test");
         }
-        if (e.getSource() == newAccount) {
+        if (event.getSource() == newAccount) {
             newAccount.setText(("bleh"));
         }
     }
