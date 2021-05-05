@@ -13,17 +13,22 @@ public class ApplicationFrame extends JFrame implements ActionListener {
     JPanel panelPrincipal, panelMember;
 
     public ApplicationFrame() {
+        //Création top-level container
         setTitle("Réservation cinéma");
         contentPane = getContentPane();
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new FlowLayout());
+
+        //Création panel invité
         JPanel panelGuest = new JPanel();
         panelGuest.setLayout(new GridLayout());
+
+        //Création panel membre
         panelMember = new JPanel();
         panelMember.setLayout(new GridLayout(4,2));
 
+        //ajout des composants
         panelGuest.add(new JButton("Réserver sans connection"));
-
         panelMember.add(new JLabel("Espace Membre"));
         newAccount = new JButton("Creer un nouveau compte");
         panelMember.add(newAccount);
