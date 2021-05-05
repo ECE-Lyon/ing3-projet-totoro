@@ -10,7 +10,7 @@ public class ApplicationFrame extends JFrame implements ActionListener {
     JTextField login;
     JPasswordField password;
     Container contentPane;
-    JPanel panelPrincipal, panelMember;
+    JPanel panelPrincipal, panelMember, creationCompte;
 
     public ApplicationFrame() {
         //Création top-level container
@@ -45,7 +45,11 @@ public class ApplicationFrame extends JFrame implements ActionListener {
 
 
         //Creation panel pour s'inscrire
-        JPanel creationCompte = new JPanel();
+        creationCompte = new JPanel();
+        creationCompte.setLayout(new GridLayout(1,1));
+        JLabel inscription = new JLabel("Inscription");
+        inscription.add(creationCompte);
+        creationCompte.setVisible(false);
 
 
 
@@ -53,6 +57,7 @@ public class ApplicationFrame extends JFrame implements ActionListener {
         getContentPane().add(panelPrincipal);
         panelPrincipal.add(panelGuest);
         panelPrincipal.add(panelMember);
+        panelPrincipal.add(creationCompte);
 
 
         setSize(400,400);
@@ -65,6 +70,7 @@ public class ApplicationFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == submit) {
             panelMember.setVisible(false);
+            creationCompte.setVisible(true);
         }
 
     }
