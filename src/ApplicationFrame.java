@@ -20,7 +20,7 @@ public class ApplicationFrame extends JFrame implements ActionListener {
         JPanel panelGuest = new JPanel();
         panelGuest.setLayout(new GridLayout());
         panelMember = new JPanel();
-        panelMember.setLayout(new GridLayout(4, 2));
+        panelMember.setLayout(new GridLayout(4,2));
 
         panelGuest.add(new JButton("Réserver sans connection"));
 
@@ -38,29 +38,35 @@ public class ApplicationFrame extends JFrame implements ActionListener {
         submit.addActionListener(this);
         panelMember.add(submit);
 
+
+        //Creation panel pour s'inscrire
+        JPanel creationCompte = new JPanel();
+
+
+
+        //ajout au contentPane
         getContentPane().add(panelPrincipal);
         panelPrincipal.add(panelGuest);
         panelPrincipal.add(panelMember);
 
 
-        setSize(400, 400);
+        setSize(400,400);
         setVisible(true);
 
 
     }
 
     @Override
-    public void actionPerformed(ActionEvent event) {
-        if (event.getSource() == submit) {
-            submit.setText("test");
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == submit) {
+            panelMember.setVisible(false);
         }
-        if (event.getSource() == newAccount) {
-            newAccount.setText(("bleh"));
-        }
+
     }
 
     public static void main(String[] args) {
         ApplicationFrame applicationFrame = new ApplicationFrame();
     }
+    }
 
-}
+
