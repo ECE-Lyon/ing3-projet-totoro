@@ -7,10 +7,10 @@ import javax.swing.*;
 public class ApplicationFrame extends JFrame implements ActionListener {
     JButton submit, newAccount;
     MemberCustomers MC;
-    JTextField login;
+    JTextField login, nouvLogin;
     JPasswordField password;
     Container contentPane;
-    JPanel panelPrincipal, panelMember, creationCompte;
+    JPanel panelPrincipal, panelMember, creationCompte, panelGuest;
 
     public ApplicationFrame() {
         //Création top-level container
@@ -20,7 +20,7 @@ public class ApplicationFrame extends JFrame implements ActionListener {
         panelPrincipal.setLayout(new FlowLayout());
 
         //Création panel invité
-        JPanel panelGuest = new JPanel();
+        panelGuest = new JPanel();
         panelGuest.setLayout(new GridLayout());
 
         //Création panel membre
@@ -31,6 +31,7 @@ public class ApplicationFrame extends JFrame implements ActionListener {
         panelGuest.add(new JButton("Réserver sans connection"));
         panelMember.add(new JLabel("Espace Membre"));
         newAccount = new JButton("Creer un nouveau compte");
+        newAccount.addActionListener(this);
         panelMember.add(newAccount);
         panelMember.add(new JLabel("Identifiant : "));
         login = new JTextField();
@@ -40,15 +41,15 @@ public class ApplicationFrame extends JFrame implements ActionListener {
         panelMember.add(password);
         panelMember.add(new JLabel(""));
         submit = new JButton("Soumettre");
-        submit.addActionListener(this);
         panelMember.add(submit);
 
 
         //Creation panel pour s'inscrire
         creationCompte = new JPanel();
-        creationCompte.setLayout(new GridLayout(1,1));
+        creationCompte.setLayout(new GridLayout(2,1));
         JLabel inscription = new JLabel("Inscription");
-        inscription.add(creationCompte);
+        nouvLogin = new JTextField();
+        creationCompte.add(inscription, nouvLogin);
         creationCompte.setVisible(false);
 
 
@@ -68,8 +69,9 @@ public class ApplicationFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == submit) {
+        if(e.getSource() == newAccount) {
             panelMember.setVisible(false);
+            panelGuest.setVisible(false);
             creationCompte.setVisible(true);
         }
 
