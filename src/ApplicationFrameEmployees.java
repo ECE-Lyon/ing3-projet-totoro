@@ -1,27 +1,35 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class ApplicationFrameEmployees extends JFrame {
     JButton submit;
     JTextField login;
     JPasswordField password;
     Container contentPane;
-    JPanel panelPrincipal;
+    JPanel panelPrincipal, panelBienvenue, panelConnection;
 
     public ApplicationFrameEmployees() {
         //Création du panel de l'application
         setTitle("Espace employés");
         contentPane = getContentPane();
         panelPrincipal = new JPanel();
+        panelPrincipal.setLayout(new GridLayout(2,1));
 
-        //Création des composants du panel
-        panelPrincipal.add(new JLabel("Bienvenue sur l'espace employés"));
+        //Création 1er panel
+        panelBienvenue = new JPanel();
+        panelBienvenue.add(new JLabel("Bienvenue sur l'espace employés !"));
+
+        //Création 2nd panel
+        panelConnection = new JPanel();
+        submit = new JButton("Soumettre");
+        panelConnection.add(submit);
 
 
-        panelPrincipal.add(new JButton("Soumettre"));
 
         getContentPane().add(panelPrincipal);
+        panelPrincipal.add(panelBienvenue);
+        panelPrincipal.add(panelConnection);
+
 
         setSize(600,400);
         setVisible(true);
