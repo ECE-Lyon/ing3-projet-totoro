@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class ApplicationFrameEmployees extends JFrame {
+public class ApplicationFrameEmployees extends JFrame implements ActionListener {
     Employees E;
     JButton connect;
     JTextField login;
@@ -38,16 +40,23 @@ public class ApplicationFrameEmployees extends JFrame {
         connect = new JButton("Se connecter");
         panelConnection.add(connect);
 
-
+        //Ajout au contentPane
         getContentPane().add(panelPrincipal);
         panelPrincipal.add(panelWelcome);
         panelPrincipal.add(panelConnection);
-
 
         setSize(600,400);
         setVisible(true);
     }
 
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == connect) {
+
+        }
+
+    }
 
 
     public static void main(String[] args) {
