@@ -11,11 +11,11 @@ public class ApplicationFrameEmployees extends JFrame {
     JLabel welcome;
 
     public ApplicationFrameEmployees() {
-        //Création du panel de l'application
+        //Création du top level container de l'application
         setTitle("Espace employés");
         contentPane = getContentPane();
         panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new GridLayout(2,1));
+        panelPrincipal.setLayout(new FlowLayout());
 
         //Création 1er panel
         panelWelcome = new JPanel();
