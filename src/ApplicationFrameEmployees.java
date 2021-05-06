@@ -20,21 +20,21 @@ public class ApplicationFrameEmployees extends JFrame {
         //Création 1er panel
         panelWelcome = new JPanel();
         welcome = new JLabel("Bienvenue sur l'espace employés !");
-        welcome.setFont(new Font("Bradley Hand", Font.BOLD, 30));
-        welcome.setForeground(Color.BLACK);
-        panelWelcome.setBackground(Color.GRAY);
+        welcome.setFont(new Font("Serif", Font.BOLD, 30));
+        //welcome.setForeground(Color.BLACK);
+        //panelWelcome.setBackground(Color.GRAY);
         panelWelcome.add(welcome);
 
         //Création 2nd panel
         panelConnection = new JPanel();
         panelConnection.setLayout(new GridLayout(3,2));
-        panelConnection.setBackground(Color.GRAY);
         panelConnection.add(new JLabel("Identifiant : "));
         login = new JTextField();
         panelConnection.add(login);
         panelConnection.add(new JLabel("Mot de passe : "));
         password = new JPasswordField();
         panelConnection.add(password);
+        panelConnection.add(new JLabel(""));
         connect = new JButton("Se connecter");
         panelConnection.add(connect);
 
