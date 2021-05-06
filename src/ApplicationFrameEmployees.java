@@ -2,11 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ApplicationFrameEmployees extends JFrame {
-    JButton submit;
+    Employees E;
+    JButton connect;
     JTextField login;
     JPasswordField password;
     Container contentPane;
-    JPanel panelPrincipal, panelBienvenue, panelConnection;
+    JPanel panelPrincipal, panelWelcome, panelConnection;
+    JLabel welcome;
 
     public ApplicationFrameEmployees() {
         //Création du panel de l'application
@@ -16,18 +18,29 @@ public class ApplicationFrameEmployees extends JFrame {
         panelPrincipal.setLayout(new GridLayout(2,1));
 
         //Création 1er panel
-        panelBienvenue = new JPanel();
-        panelBienvenue.add(new JLabel("Bienvenue sur l'espace employés !"));
+        panelWelcome = new JPanel();
+        welcome = new JLabel("Bienvenue sur l'espace employés !");
+        welcome.setFont(new Font("Bradley Hand", Font.BOLD, 30));
+        welcome.setForeground(Color.BLACK);
+        panelWelcome.setBackground(Color.GRAY);
+        panelWelcome.add(welcome);
 
         //Création 2nd panel
         panelConnection = new JPanel();
-        submit = new JButton("Soumettre");
-        panelConnection.add(submit);
-
+        panelConnection.setLayout(new GridLayout(3,2));
+        panelConnection.setBackground(Color.GRAY);
+        panelConnection.add(new JLabel("Identifiant : "));
+        login = new JTextField();
+        panelConnection.add(login);
+        panelConnection.add(new JLabel("Mot de passe : "));
+        password = new JPasswordField();
+        panelConnection.add(password);
+        connect = new JButton("Se connecter");
+        panelConnection.add(connect);
 
 
         getContentPane().add(panelPrincipal);
-        panelPrincipal.add(panelBienvenue);
+        panelPrincipal.add(panelWelcome);
         panelPrincipal.add(panelConnection);
 
 
