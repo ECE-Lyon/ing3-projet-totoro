@@ -9,7 +9,7 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener 
     JTextField login;
     JPasswordField password;
     Container contentPane;
-    JPanel panelPrincipal, panelWelcome, panelConnection;
+    JPanel panelPrincipal, panelWelcome, panelConnection, panelMenuPrincipal, panelPremierFilm, panelDeuxiemeFilm, panelTroisiemeFilm;
     JLabel welcome;
 
     public ApplicationFrameEmployees() {
@@ -29,7 +29,7 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener 
 
         //Création 2nd panel
         panelConnection = new JPanel();
-        panelConnection.setLayout(new GridLayout(3,2));
+        panelConnection.setLayout(new GridLayout(3, 2));
         panelConnection.add(new JLabel("Identifiant : "));
         login = new JTextField();
         panelConnection.add(login);
@@ -45,16 +45,38 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener 
         panelPrincipal.add(panelWelcome);
         panelPrincipal.add(panelConnection);
 
-        setSize(600,400);
+        //Création menu après connection
+        panelMenuPrincipal = new JPanel();
+        panelMenuPrincipal.setLayout(new FlowLayout());
+        panelPremierFilm = new JPanel();
+        panelPremierFilm.add(new JButton("Film 1"));
+        panelDeuxiemeFilm = new JPanel();
+        panelDeuxiemeFilm.add(new JButton("Film 2"));
+        panelTroisiemeFilm = new JPanel();
+        panelTroisiemeFilm.add(new JButton("Film 3"));
+        panelMenuPrincipal.add(panelPremierFilm);
+        panelMenuPrincipal.add(panelDeuxiemeFilm);
+        panelMenuPrincipal.add(panelTroisiemeFilm);
+
+        //ActionListener : ouvre le menu de l'application une fois connecté
+        connect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == connect) {
+                    panelWelcome.setVisible(false);
+                    panelConnection.setVisible(false);
+                    contentPane.add(panelMenuPrincipal);
+                }
+            }
+        });
+
+        setSize(600, 400);
         setVisible(true);
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == connect) {
-
-        }
 
     }
 
@@ -62,5 +84,4 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener 
     public static void main(String[] args) {
         ApplicationFrameEmployees applicationFrameEmployees = new ApplicationFrameEmployees();
     }
-
 }
