@@ -5,11 +5,11 @@ import java.awt.event.ActionListener;
 
 public class ApplicationFrameEmployees extends JFrame implements ActionListener {
     Employees E;
-    JButton connect;
+    JButton connect, addMovie, removeMovie;
     JTextField login;
     JPasswordField password;
     Container contentPane;
-    JPanel panelPrincipal, panelWelcome, panelConnection;
+    JPanel panelPrincipal, panelWelcome, panelConnection, panelMenu;
     JLabel welcome;
 
 
@@ -48,10 +48,29 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener 
         panelPrincipal.add(panelConnection);
 
 
+        //ActionListener : une fois connecté, l'employé choisit si il faut ajouter ou supprimer un film
+        panelMenu = new JPanel();
+        panelMenu.setLayout(new FlowLayout());
+        addMovie = new JButton("Ajouter un film");
+        panelMenu.add(addMovie);
+        removeMovie = new JButton("Enlever un film");
+        panelMenu.add(removeMovie);
+
+        connect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == connect){
+                    panelPrincipal.setVisible(false);
+                    contentPane.add(panelMenu);
+                    panelMenu.setVisible(true);
+                }
+            }
+        });
 
 
         setSize(600, 400);
         setVisible(true);
+
     }
 
 
