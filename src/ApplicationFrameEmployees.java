@@ -9,8 +9,9 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener 
     JTextField login;
     JPasswordField password;
     Container contentPane;
-    JPanel panelPrincipal, panelWelcome, panelConnection, panelMenuPrincipal, panelPremierFilm, panelDeuxiemeFilm, panelTroisiemeFilm;
+    JPanel panelPrincipal, panelWelcome, panelConnection;
     JLabel welcome;
+
 
     public ApplicationFrameEmployees() {
         //Création du top level container de l'application
@@ -19,13 +20,13 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener 
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new FlowLayout());
 
+
         //Création 1er panel
         panelWelcome = new JPanel();
-        welcome = new JLabel("Bienvenue sur l'espace employés !");
-        welcome.setFont(new Font("Serif", Font.BOLD, 30));
-        //welcome.setForeground(Color.BLACK);
-        //panelWelcome.setBackground(Color.GRAY);
+        welcome = new JLabel("Bienvenue sur l'espace employés");
+        welcome.setFont(new Font("Calibri", Font.BOLD, 30));
         panelWelcome.add(welcome);
+
 
         //Création 2nd panel
         panelConnection = new JPanel();
@@ -40,35 +41,14 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener 
         connect = new JButton("Se connecter");
         panelConnection.add(connect);
 
+
         //Ajout au contentPane
         getContentPane().add(panelPrincipal);
         panelPrincipal.add(panelWelcome);
         panelPrincipal.add(panelConnection);
 
-        //Création menu après connection
-        panelMenuPrincipal = new JPanel();
-        panelMenuPrincipal.setLayout(new FlowLayout());
-        panelPremierFilm = new JPanel();
-        panelPremierFilm.add(new JButton("Film 1"));
-        panelDeuxiemeFilm = new JPanel();
-        panelDeuxiemeFilm.add(new JButton("Film 2"));
-        panelTroisiemeFilm = new JPanel();
-        panelTroisiemeFilm.add(new JButton("Film 3"));
-        panelMenuPrincipal.add(panelPremierFilm);
-        panelMenuPrincipal.add(panelDeuxiemeFilm);
-        panelMenuPrincipal.add(panelTroisiemeFilm);
 
-        //ActionListener : ouvre le menu de l'application une fois connecté
-        connect.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == connect) {
-                    panelWelcome.setVisible(false);
-                    panelConnection.setVisible(false);
-                    contentPane.add(panelMenuPrincipal);
-                }
-            }
-        });
+
 
         setSize(600, 400);
         setVisible(true);
