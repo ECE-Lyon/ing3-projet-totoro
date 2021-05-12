@@ -62,7 +62,6 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener 
                 if (e.getSource() == connect){
                     panelPrincipal.setVisible(false);
                     contentPane.add(panelMenu);
-                    panelMenu.setVisible(true);
                 }
             }
         });

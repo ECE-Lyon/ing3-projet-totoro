@@ -79,7 +79,7 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         panelMainMenu.setLayout(new GridLayout(1,3));
 
         panelMovie1 = new JPanel();
-        panelMovie1.setLayout(new FlowLayout(3));
+        panelMovie1.setLayout(new FlowLayout());
         panelMovie1.add(new JLabel("photo film 1"));
         panelMovie1.add(new JLabel("titre film 1"));
         panelMovie1.add(new JLabel("genre film 1"));
@@ -89,17 +89,17 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         panelMovie1.add(movie1);
 
         panelMovie2 = new JPanel();
-        panelMovie2.setLayout(new FlowLayout(3));
+        panelMovie2.setLayout(new FlowLayout());
         panelMovie2.add(new JLabel("photo film 2"));
         panelMovie2.add(new JLabel("titre film 2"));
         panelMovie2.add(new JLabel("genre film 2"));
         panelMovie2.add(new JLabel("date de sortie film 2"));
         panelMovie2.add(new JLabel("durée en minutes film 2"));
         movie2 = new JButton("Voir ce film");
-        panelMovie1.add(movie2);
+        panelMovie2.add(movie2);
 
         panelMovie3 = new JPanel();
-        panelMovie3.setLayout(new FlowLayout(3));
+        panelMovie3.setLayout(new FlowLayout());
         panelMovie3.add(new JLabel("photo film 3"));
         panelMovie3.add(new JLabel("titre film 3"));
         panelMovie3.add(new JLabel("genre film 3"));
