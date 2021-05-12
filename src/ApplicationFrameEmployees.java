@@ -3,13 +3,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ApplicationFrameEmployees extends JFrame implements ActionListener {
+public class ApplicationFrameEmployees extends JFrame implements ActionListener{
     Employees E;
     JButton connect, addMovie, removeMovie;
-    JTextField login;
+    JTextField login, titleNewMovie, genreNewMovie;
     JPasswordField password;
     Container contentPane;
-    JPanel panelPrincipal, panelWelcome, panelConnection, panelMenu;
+    JPanel panelPrincipal, panelWelcome, panelConnection, panelMenu, panelAddMovie;
     JLabel welcome;
 
 
@@ -65,6 +65,30 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener 
                 }
             }
         });
+
+
+        //Panel pour ajouter un film
+        panelAddMovie = new JPanel();
+        panelAddMovie.setLayout(new FlowLayout());
+        panelAddMovie.add(new JLabel("Ajout d'un film"));
+        panelAddMovie.add(new JLabel(""));
+        panelAddMovie.add(new JLabel("Titre : "));
+        titleNewMovie = new JTextField();
+        panelAddMovie.add(titleNewMovie);
+        panelAddMovie.add(new JLabel("Genre : "));
+        genreNewMovie = new JTextField();
+        panelAddMovie.add(genreNewMovie);
+
+        //ActionListener : clic "Ajouter un film"
+        addMovie.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == addMovie){
+
+                }
+            }
+        });
+
 
 
         setSize(600, 400);
