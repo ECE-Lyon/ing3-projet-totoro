@@ -4,6 +4,14 @@ public class MemberCustomers extends Customers{
     private String login;
     private String password;
 
+    public MemberCustomers() {
+
+    }
+    public MemberCustomers(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
     public MemberCustomers(String login, String password, enumCategorieAge categorieAge) {
         this.login = login;
         this.password = password;
