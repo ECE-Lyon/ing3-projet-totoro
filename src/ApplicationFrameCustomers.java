@@ -8,7 +8,7 @@ import javax.swing.*;
 
 
 public class ApplicationFrameCustomers extends JFrame implements ActionListener {
-    JButton submit,submitCreationCompte, newAccount, movie1, movie2, movie3;
+    JButton submit,submitCreationCompte, newAccount, freeConnexion, movie1, movie2, movie3;
     JLabel inscription, lNewLogin, lNewPassword;
     MemberCustomers MC;
     JTextField login, newLogin;
@@ -26,12 +26,13 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         //Création panel invité
         panelGuest = new JPanel();
         panelGuest.setLayout(new GridLayout());
+        freeConnexion = new JButton("Réserver sans connexion");
+        panelGuest.add(freeConnexion);
 
         //Création panel membre
         panelMember = new JPanel();
         panelMember.setLayout(new GridLayout(4,2));
         //Ajout des composants
-        panelGuest.add(new JButton("Réserver sans connection"));
         panelMember.add(new JLabel("Espace Membre"));
         newAccount = new JButton("Creer un nouveau compte");
         newAccount.addActionListener(this);
@@ -55,13 +56,12 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         //ajout de ses composants
         inscription = new JLabel("Inscription :");
         lNewLogin = new JLabel("Veillez entrez un identifiant");
-        final String[] loginARemplir = {"Rien"};
-        final String[] passwordARemplir = {"mdp"};
+        final String[] loginARemplir = {"login"};
+        final String[] passwordARemplir = {"mot de passe"};
         newLogin = new JTextField(loginARemplir[0]);
         lNewPassword = new JLabel("Veuillez entrez un mot de passe");
         newPassword = new JPasswordField(passwordARemplir[0]);
         submitCreationCompte = new JButton("Création compte");
-
         panelCreationCompteInscription.add(inscription);
         panelCreationCompteFormulaire.add(lNewLogin);
         panelCreationCompteFormulaire.add(newLogin);
@@ -71,49 +71,9 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         panelCreationCompte.add(panelCreationCompteInscription);
         panelCreationCompte.add(panelCreationCompteFormulaire);
 
-
-
-        //ajout au contentPane
-        getContentPane().add(panelPrincipal);
-        panelPrincipal.add(panelGuest);
-        panelPrincipal.add(panelMember);
-
-
-        //ouvre le panel pour s'inscrire
-        newAccount.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(e.getSource() == newAccount) {
-                    panelPrincipal.setVisible(false);
-                    contentPane.add(panelCreationCompte);
-
-                }
-            }
-        });
-
-        //listener du bouton soumettre
-        submitCreationCompte.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(e.getSource() == submitCreationCompte) {
-                    MC = new MemberCustomers();
-                    MC.setLogin(newLogin.getText());
-                    MC.setPassword(newPassword.getText());
-                    try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
-                        UserDao userDao = new UserDaoImpl(connection);
-                        userDao.add(MC);
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-                }
-            }
-        });
-
-
         //Création menu principal après connection
         panelMainMenu = new JPanel();
         panelMainMenu.setLayout(new GridLayout(1,3));
-
         panelMovie1 = new JPanel();
         panelMovie1.setLayout(new GridLayout(6,1));
         panelMovie1.add(new JLabel("photo film 1"));
@@ -148,6 +108,56 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         panelMainMenu.add(panelMovie1);
         panelMainMenu.add(panelMovie2);
         panelMainMenu.add(panelMovie3);
+
+        //ajout au contentPane
+        getContentPane().add(panelPrincipal);
+        panelPrincipal.add(panelGuest);
+        panelPrincipal.add(panelMember);
+
+
+        //ouvre le panel du men film
+        freeConnexion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == freeConnexion){
+                    panelPrincipal.setVisible(false);
+                    contentPane.add(panelMainMenu);
+                    panelMainMenu.setVisible(true);
+                }
+            }
+        });
+        //ouvre le panel pour s'inscrire
+        newAccount.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == newAccount) {
+                    panelPrincipal.setVisible(false);
+                    contentPane.add(panelCreationCompte);
+
+                }
+            }
+        });
+
+        //listener du bouton soumettre
+        submitCreationCompte.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == submitCreationCompte) {
+                    MC = new MemberCustomers();
+                    MC.setLogin(newLogin.getText());
+                    MC.setPassword(newPassword.getText());
+                    try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
+                        UserDao userDao = new UserDaoImpl(connection);
+                        userDao.add(MC);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                    panelCreationCompte.setVisible(false);
+                    panelPrincipal.add(new JLabel("Votre compte a bien été créé vous pouvez vous connecter"));
+                    panelPrincipal.setVisible(true);
+                }
+            }
+        });
 
 
         //ActionListener : une fois connecté, ouvre le menu de l'application pour choisir son film
