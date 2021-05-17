@@ -15,8 +15,9 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
     JButton addMovie, removeMovie, confirmAddMovie, confirmRemoveMovie;
     JTextField titleNewMovie, genreNewMovie, idNewMovie, dateNewMovie, timeNewMovie, urlNewMovie, idMovieRemove;
     Container contentPane;
-    JPanel panelPrincipal, panelWelcome, panelConnection, panelMenu, panelAddMovie, panelRemoveMovie;
-    JLabel welcome;
+    JPanel panelPrincipal, panelWelcome, panelLabelAjout, panelMenu, panelAddMovie,
+            panelRemoveMovie, panelInfoMovie;
+    JLabel welcome, labelAjout;
 
 
     public ApplicationFrameEmployees() {
@@ -58,26 +59,49 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
 
         //Création d'un panel pour ajouter un film à l'affiche
         panelAddMovie = new JPanel();
-        panelAddMovie.add(new JLabel("Quel sera l'emplacement du film ? (1, 2 ou 3)"));
+        panelAddMovie.setLayout(new FlowLayout());
+
+        //Création d'un sous-panel pour le label "Ajouter un film à l'affiche"
+        panelLabelAjout = new JPanel();
+        labelAjout = new JLabel("Ajouter un film à l'affiche");
+        labelAjout.setFont(new Font("Calibri", Font.BOLD, 40));
+        panelLabelAjout.add(labelAjout);
+        panelAddMovie.add(panelLabelAjout);
+
+        //Création d'un sous-panel regroupant les informations du film à remplir
+        panelInfoMovie = new JPanel();
+        panelInfoMovie.setLayout(new GridLayout(7,2));
+
+        panelInfoMovie.add(new JLabel("Emplacement : "));
         idNewMovie = new JTextField(5);
-        panelAddMovie.add(idNewMovie);
-        panelAddMovie.add(new JLabel("Url de l'image :"));
+        panelInfoMovie.add(idNewMovie);
+
+        panelInfoMovie.add(new JLabel("Url de l'image : "));
         urlNewMovie = new JTextField(5);
-        panelAddMovie.add(urlNewMovie);
-        panelAddMovie.add(new JLabel("Titre : "));
+        panelInfoMovie.add(urlNewMovie);
+
+        panelInfoMovie.add(new JLabel("Titre : "));
         titleNewMovie = new JTextField(5);
-        panelAddMovie.add(titleNewMovie);
-        panelAddMovie.add(new JLabel("Genre : "));
+        panelInfoMovie.add(titleNewMovie);
+
+        panelInfoMovie.add(new JLabel("Genre : "));
         genreNewMovie = new JTextField(5);
-        panelAddMovie.add(genreNewMovie);
-        panelAddMovie.add(new JLabel("Date de sortie :"));
-        dateNewMovie = new JTextField(5);
-        panelAddMovie.add(dateNewMovie);
-        panelAddMovie.add(new JLabel("Durée du film (en minutes) :"));
+        panelInfoMovie.add(genreNewMovie);
+
+        panelInfoMovie.add(new JLabel("Date de sortie : "));
+        dateNewMovie = new JTextField();
+        panelInfoMovie.add(dateNewMovie);
+
+        panelInfoMovie.add(new JLabel("Durée du film (en minutes) : "));
         timeNewMovie = new JTextField(5);
-        panelAddMovie.add(timeNewMovie);
+        panelInfoMovie.add(timeNewMovie);
+
+        panelInfoMovie.add(new JLabel(""));
         confirmAddMovie = new JButton("Ajout du film");
-        panelAddMovie.add(confirmAddMovie);
+        panelInfoMovie.add(confirmAddMovie);
+
+        panelAddMovie.add(panelInfoMovie);
+
 
         //Création d'un panel pour enlever un film à l'affiche
         panelRemoveMovie = new JPanel();
@@ -134,7 +158,6 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
                     }
                     contentPane.remove(panelAddMovie);
                     panelMenu.setVisible(true);
-
                 }
             }
         });
