@@ -63,7 +63,7 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         panelButtonCreateAccount.add(newAccount);
         panelPrincipal.add(panelButtonCreateAccount);
 
-        //Création d'un sous-panel membre pour s'identifier
+        //Création d'un sous-panel pour s'identifier
         panelMember = new JPanel();
         panelMember.setLayout(new GridLayout(4,2));
         panelMember.add(new JLabel("Espace Membre"));

@@ -6,12 +6,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
 public class ApplicationFrameEmployees extends JFrame implements ActionListener{
+
+    //Déclaration des variables
     Employees E;
     Movie movie;
-    JButton connect, addMovie, removeMovie, confirmAddMovie, confirmRemoveMovie;
-    JTextField login, titleNewMovie, genreNewMovie, idNewMovie, dateNewMovie, timeNewMovie, urlNewMovie, idMovieRemove;
-    JPasswordField password;
+    JButton addMovie, removeMovie, confirmAddMovie, confirmRemoveMovie;
+    JTextField titleNewMovie, genreNewMovie, idNewMovie, dateNewMovie, timeNewMovie, urlNewMovie, idMovieRemove;
     Container contentPane;
     JPanel panelPrincipal, panelWelcome, panelConnection, panelMenu, panelAddMovie, panelRemoveMovie;
     JLabel welcome;
@@ -19,45 +21,44 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
 
     public ApplicationFrameEmployees() {
 
-        //Création du top level container de l'application
-        setTitle("Espace employés");
+        //Création du top-level container
         contentPane = getContentPane();
+        setTitle("Espace employés");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+
+        //Création d'un panel principal regroupant les sous-panels
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new FlowLayout());
 
-
-        //Création 1er panel
+        //Création d'un sous-panel pour le label "Bienvenue sur l'espace employés"
         panelWelcome = new JPanel();
         welcome = new JLabel("Bienvenue sur l'espace employés");
         welcome.setFont(new Font("Calibri", Font.BOLD, 30));
         panelWelcome.add(welcome);
+        panelPrincipal.add(panelWelcome);
 
-
-        //Création 2nd panel
-        panelConnection = new JPanel();
-        panelConnection.setLayout(new GridLayout(3, 2));
-        panelConnection.add(new JLabel("Identifiant : "));
-        login = new JTextField();
-        panelConnection.add(login);
-        panelConnection.add(new JLabel("Mot de passe : "));
-        password = new JPasswordField();
-        panelConnection.add(password);
-        panelConnection.add(new JLabel(""));
-        connect = new JButton("Se connecter");
-        panelConnection.add(connect);
-
-        //ActionListener : une fois connecté, l'employé choisit s'il faut ajouter ou supprimer un film
+        //Création d'un sous-panel pour les boutons d'ajout ou de suppression d'un film
         panelMenu = new JPanel();
         panelMenu.setLayout(new FlowLayout());
-        addMovie = new JButton("Ajouter un film");
+
+        addMovie = new JButton("Ajouter un film à l'affiche");
         panelMenu.add(addMovie);
-        removeMovie = new JButton("Enlever un film");
+
+        removeMovie = new JButton("Enlever un film à l'affiche");
         panelMenu.add(removeMovie);
 
-        //Panel pour ajouter un film
+        panelPrincipal.add(panelMenu);
+
+
+        //Ajout au contentPane
+        getContentPane().add(panelPrincipal);
+
+
+
+        //Création d'un panel pour ajouter un film à l'affiche
         panelAddMovie = new JPanel();
-        panelAddMovie.add(new JLabel("Quel sera l'emplacement du film ?"));
+        panelAddMovie.add(new JLabel("Quel sera l'emplacement du film ? (1, 2 ou 3)"));
         idNewMovie = new JTextField(5);
         panelAddMovie.add(idNewMovie);
         panelAddMovie.add(new JLabel("Url de l'image :"));
@@ -72,37 +73,21 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
         panelAddMovie.add(new JLabel("Date de sortie :"));
         dateNewMovie = new JTextField(5);
         panelAddMovie.add(dateNewMovie);
-        panelAddMovie.add(new JLabel("Durée du film :"));
+        panelAddMovie.add(new JLabel("Durée du film (en minutes) :"));
         timeNewMovie = new JTextField(5);
         panelAddMovie.add(timeNewMovie);
         confirmAddMovie = new JButton("Ajout du film");
         panelAddMovie.add(confirmAddMovie);
 
-        //Panel pour supprimer un film
+        //Création d'un panel pour enlever un film à l'affiche
         panelRemoveMovie = new JPanel();
         panelRemoveMovie.add(new JLabel("Quel est l'emplacement du film à remplacer ?"));
         idMovieRemove = new JTextField(5);
-        confirmRemoveMovie = new JButton("Suppression du film");
         panelRemoveMovie.add(idMovieRemove);
+        confirmRemoveMovie = new JButton("Suppression du film");
         panelRemoveMovie.add(confirmRemoveMovie);
 
-        //Ajout au contentPane
-        getContentPane().add(panelPrincipal);
-        panelPrincipal.add(panelWelcome);
-        panelPrincipal.add(panelConnection);
 
-
-
-
-        connect.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == connect){
-                    panelPrincipal.setVisible(false);
-                    contentPane.add(panelMenu);
-                }
-            }
-        });
 
         //ActionListener : ouvre le panel pour ajouter un film
         addMovie.addActionListener(new ActionListener() {
@@ -115,7 +100,19 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
             }
         });
 
-        //Listener pour ajouter un film à la base de donnée
+        //ActionListener : ouvre le panel pour enlever un film
+        removeMovie.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == removeMovie) {
+                    panelMenu.setVisible(false);
+                    contentPane.add(panelRemoveMovie);
+                }
+            }
+        });
+
+
+        //ActionListener pour ajouter un film à la base de données
         confirmAddMovie.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -142,18 +139,7 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
             }
         });
 
-        //Ouvre le panel pour supprimer un film
-        removeMovie.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == removeMovie) {
-                    panelMenu.setVisible(false);
-                    contentPane.add(panelRemoveMovie);
-                }
-            }
-        });
-
-        //Supprime le film de la base de donnée et ferme le panel
+        //ActionListener : supprime le film sélectionné de la base de données et ferme le panel
         confirmRemoveMovie.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -171,10 +157,11 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
             }
         });
 
+
         setSize(600, 400);
         setVisible(true);
-
     }
+
 
 
     @Override
