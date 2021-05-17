@@ -8,13 +8,16 @@ import javax.swing.*;
 
 
 public class ApplicationFrameCustomers extends JFrame implements ActionListener {
-    JButton submit,submitCreationCompte, newAccount, freeConnexion, addMovie1, addMovie2, addMovie3;
+    JButton submit,submitCreationCompte, newAccount, freeConnection;
+    JButton bookMovie[] = new JButton[3];
     JLabel inscription, lNewLogin, lNewPassword;
-    MemberCustomers MC;
+    MemberCustomers MC, memberCustomersCheck;
     JTextField login, newLogin;
     JPasswordField password, newPassword;
     Container contentPane;
-    JPanel panelPrincipal, panelMember, panelCreationCompte, panelCreationCompteInscription, panelCreationCompteFormulaire, panelGuest, panelMainMenu, panelMovie1, panelMovie2, panelMovie3;
+    JPanel panelPrincipal, panelMember, panelCreationCompte, panelCreationCompteInscription,
+            panelCreationCompteFormulaire, panelGuest, panelMainMenu;
+    JPanel panelMovie[] = new JPanel[3];
 
     public ApplicationFrameCustomers() {
         //connection avec la base de données des films
@@ -40,12 +43,12 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         //Création panel invité
         panelGuest = new JPanel();
         panelGuest.setLayout(new GridLayout());
-        freeConnexion = new JButton("Réserver sans connexion");
-        panelGuest.add(freeConnexion);
+        freeConnection = new JButton("Réserver sans connexion");
+        panelGuest.add(freeConnection);
 
-        //Création panel membre
+        //Création panel membre pour s'identifier
         panelMember = new JPanel();
-        panelMember.setLayout(new GridLayout(4,2));
+        panelMember.setLayout(new GridLayout(5,2));
         //Ajout des composants
         panelMember.add(new JLabel("Espace Membre"));
         newAccount = new JButton("Creer un nouveau compte");
@@ -88,41 +91,43 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         //Création menu principal après connection
         panelMainMenu = new JPanel();
         panelMainMenu.setLayout(new GridLayout(1,3));
-        panelMovie1 = new JPanel();
-        ImageIcon imageIcon = new ImageIcon(movie1.getUrl());
-        JLabel jLabel = new JLabel(imageIcon);
-        panelMovie1.add(jLabel);
-        panelMovie1.add(new JLabel(movie1.getTitle()));
-        panelMovie1.add(new JLabel(movie1.getGenre()));
-        panelMovie1.add(new JLabel(movie1.getDate()));
-        panelMovie1.add(new JLabel(movie1.getTime() + " minutes"));
-        addMovie1 = new JButton("Voir ce film");
+        //Panel pour le film 1
+        panelMovie[0] = new JPanel();
+        ImageIcon imageIcon1 = new ImageIcon(movie1.getUrl());
+        JLabel jLabel = new JLabel(imageIcon1);
+        panelMovie[0].add(jLabel);
+        panelMovie[0].add(new JLabel(movie1.getTitle()));
+        panelMovie[0].add(new JLabel(movie1.getGenre()));
+        panelMovie[0].add(new JLabel(movie1.getDate()));
+        panelMovie[0].add(new JLabel(movie1.getTime() + " minutes"));
+        bookMovie[0] = new JButton("Voir ce film");
+        panelMovie[0].add(bookMovie[0]);
 
-        panelMovie1.add(addMovie1);
+        //Panel film 2
+        panelMovie[1] = new JPanel();
+        ImageIcon imageIcon2 = new ImageIcon(movie2.getUrl());
+        panelMovie[1].add(new JLabel(imageIcon2));
+        panelMovie[1].add(new JLabel(movie2.getTitle()));
+        panelMovie[1].add(new JLabel(movie2.getGenre()));
+        panelMovie[1].add(new JLabel(movie2.getDate()));
+        panelMovie[1].add(new JLabel(movie2.getTime() + " minutes"));
+        bookMovie[1] = new JButton("Voir ce film");
+        panelMovie[1].add(bookMovie[1]);
 
-        panelMovie2 = new JPanel();
-        panelMovie2.setLayout(new GridLayout(6,1));
-        /*panelMovie2.add(new JLabel(movie2.getUrl()));
-        panelMovie2.add(new JLabel(movie2.getTitle()));
-        panelMovie2.add(new JLabel("genre encore à régler"));
-        panelMovie2.add(new JLabel(movie2.getDate()));
-        panelMovie2.add(new JLabel(movie2.getTime() + " minutes"));*/
-        addMovie2 = new JButton("Voir ce film");
-        panelMovie2.add(addMovie2);
+        //Panel film 3
+        panelMovie[2] = new JPanel();
+        ImageIcon imageIcon3 = new ImageIcon(movie3.getUrl());
+        panelMovie[2].add(new JLabel(imageIcon3));
+        panelMovie[2].add(new JLabel(movie3.getTitle()));
+        panelMovie[2].add(new JLabel(movie3.getGenre()));
+        panelMovie[2].add(new JLabel(movie3.getDate()));
+        panelMovie[2].add(new JLabel(movie3.getTime() + " minutes"));
+        bookMovie[2] = new JButton("Voir ce film");
+        panelMovie[2].add(bookMovie[2]);
 
-        panelMovie3 = new JPanel();
-        panelMovie3.setLayout(new FlowLayout());
-        panelMovie3.add(new JLabel("photo film 3"));
-        panelMovie3.add(new JLabel("titre film 3"));
-        panelMovie3.add(new JLabel("genre film 3"));
-        panelMovie3.add(new JLabel("date de sortie film 3"));
-        panelMovie3.add(new JLabel("durée en minutes film 3"));
-        addMovie3 = new JButton("Voir ce film");
-        panelMovie3.add(addMovie3);
-
-        panelMainMenu.add(panelMovie1);
-        panelMainMenu.add(panelMovie2);
-        panelMainMenu.add(panelMovie3);
+        panelMainMenu.add(panelMovie[0]);
+        panelMainMenu.add(panelMovie[1]);
+        panelMainMenu.add(panelMovie[2]);
 
         //ajout au contentPane
         getContentPane().add(panelPrincipal);
@@ -130,18 +135,19 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         panelPrincipal.add(panelMember);
 
 
-        //ouvre le panel du men film
-        freeConnexion.addActionListener(new ActionListener() {
+        //ouvre le panel du menu pour réserver les films
+        freeConnection.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == freeConnexion){
+                if (e.getSource() == freeConnection){
                     panelPrincipal.setVisible(false);
                     contentPane.add(panelMainMenu);
                     panelMainMenu.setVisible(true);
                 }
             }
         });
-        //ouvre le panel pour s'inscrire
+
+        //Ouvre le panel pour s'inscrire
         newAccount.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -175,14 +181,33 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         });
 
 
-        //ActionListener : une fois connecté, ouvre le menu de l'application pour choisir son film
+        //ActionListener vérifiant l'identité de l'utilisateur
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == submit){
-                    panelPrincipal.setVisible(false);
-                    contentPane.add(panelMainMenu);
-                    panelMainMenu.setVisible(true);
+                    try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
+                        memberCustomersCheck = new MemberCustomers();
+                        UserDao userDao = new UserDaoImpl(connection);
+                        memberCustomersCheck = userDao.get(login.getText(), password.getText());
+
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+                    if(memberCustomersCheck == null) {
+                        login.setText("");
+                        password.setText("");
+                        panelPrincipal.add(new JLabel("Erreur de login ou de mot de passe, réessayer"));
+                        panelPrincipal.setVisible(false);
+                        panelPrincipal.setVisible(true);
+                    }
+
+                    else{
+                        panelPrincipal.setVisible(false);
+                        contentPane.add(panelMainMenu);
+                    }
+
                 }
             }
         });

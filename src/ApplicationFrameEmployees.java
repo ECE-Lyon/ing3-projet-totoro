@@ -9,11 +9,11 @@ import java.sql.SQLException;
 public class ApplicationFrameEmployees extends JFrame implements ActionListener{
     Employees E;
     Movie movie;
-    JButton connect, addMovie, removeMovie, confirmAddMovie;
-    JTextField login, titleNewMovie, genreNewMovie, idNewMovie, dateNewMovie, timeNewMovie, urlNewMovie;
+    JButton connect, addMovie, removeMovie, confirmAddMovie, confirmRemoveMovie;
+    JTextField login, titleNewMovie, genreNewMovie, idNewMovie, dateNewMovie, timeNewMovie, urlNewMovie, idMovieRemove;
     JPasswordField password;
     Container contentPane;
-    JPanel panelPrincipal, panelWelcome, panelConnection, panelMenu, panelAddMovie;
+    JPanel panelPrincipal, panelWelcome, panelConnection, panelMenu, panelAddMovie, panelRemoveMovie;
     JLabel welcome;
 
 
@@ -57,7 +57,6 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
 
         //Panel pour ajouter un film
         panelAddMovie = new JPanel();
-        panelAddMovie.add(new JLabel("Ajout d'un film"));
         panelAddMovie.add(new JLabel("Quelle sera l'emplacement du film ?"));
         idNewMovie = new JTextField(5);
         panelAddMovie.add(idNewMovie);
@@ -79,6 +78,14 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
         confirmAddMovie = new JButton("Ajout du film");
         panelAddMovie.add(confirmAddMovie);
 
+        //Panel pour supprimer un film
+        panelRemoveMovie = new JPanel();
+        panelRemoveMovie.add(new JLabel("Quelle est l'emplacement du film à remplacer ?"));
+        idMovieRemove = new JTextField(5);
+        confirmRemoveMovie = new JButton("Suppression du film");
+        panelRemoveMovie.add(idMovieRemove);
+        panelRemoveMovie.add(confirmRemoveMovie);
+
         //Ajout au contentPane
         getContentPane().add(panelPrincipal);
         panelPrincipal.add(panelWelcome);
@@ -97,10 +104,7 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
             }
         });
 
-
-
-
-        //ActionListener : clic "Ajouter un film"
+        //ActionListener : ouvre le panel pour ajouter un film"
         addMovie.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -110,6 +114,7 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
                 }
             }
         });
+
         //Listener pour ajouter un film à la base de donnée
         confirmAddMovie.addActionListener(new ActionListener() {
             @Override
@@ -130,7 +135,38 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }
+                    contentPane.remove(panelAddMovie);
+                    panelMenu.setVisible(true);
 
+                }
+            }
+        });
+
+        //Ouvre le panel pour supprimer un film
+        removeMovie.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == removeMovie) {
+                    panelMenu.setVisible(false);
+                    contentPane.add(panelRemoveMovie);
+                }
+            }
+        });
+
+        //Supprime le film de la base de donnée et ferme le panel
+        confirmRemoveMovie.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == confirmRemoveMovie) {
+                    try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
+                        MovieDao movieDao = new MovieDaoImpl(connection);
+                        int intIdRemoveMovie = Integer.parseInt(idMovieRemove.getText());
+                        movieDao.delete(intIdRemoveMovie);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                    contentPane.remove(panelRemoveMovie);
+                    panelMenu.setVisible(true);
                 }
             }
         });

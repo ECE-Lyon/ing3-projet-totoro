@@ -15,7 +15,7 @@ public class MovieDaoImpl implements MovieDao{
             preparedStatement.setInt(1, movie.getId());
             preparedStatement.setString(2, movie.getUrl());
             preparedStatement.setString(3, movie.getTitle());
-            preparedStatement.setString(4, "testgenre");
+            preparedStatement.setString(4, movie.getGenre());
             preparedStatement.setString(5, movie.getDate());
             preparedStatement.setInt(6, movie.getTime());
 
@@ -27,10 +27,10 @@ public class MovieDaoImpl implements MovieDao{
 
     @Override
     public Movie get(Integer id) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM film WHERE id=?")) {
-            statement.setInt(1, id);
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM film WHERE id=?")) {
+            preparedStatement.setInt(1, id);
 
-            try (ResultSet resultSet = statement.executeQuery()) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     Movie movie = new Movie();
 
@@ -44,7 +44,19 @@ public class MovieDaoImpl implements MovieDao{
                     return movie;
                 }
             }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
         return null;
+    }
+
+    public void delete(Integer id) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM film WHERE id =?")) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.execute();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }
