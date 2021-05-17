@@ -57,7 +57,7 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
 
         //Panel pour ajouter un film
         panelAddMovie = new JPanel();
-        panelAddMovie.add(new JLabel("Quelle sera l'emplacement du film ?"));
+        panelAddMovie.add(new JLabel("Quel sera l'emplacement du film ?"));
         idNewMovie = new JTextField(5);
         panelAddMovie.add(idNewMovie);
         panelAddMovie.add(new JLabel("Url de l'image :"));
@@ -80,7 +80,7 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
 
         //Panel pour supprimer un film
         panelRemoveMovie = new JPanel();
-        panelRemoveMovie.add(new JLabel("Quelle est l'emplacement du film à remplacer ?"));
+        panelRemoveMovie.add(new JLabel("Quel est l'emplacement du film à remplacer ?"));
         idMovieRemove = new JTextField(5);
         confirmRemoveMovie = new JButton("Suppression du film");
         panelRemoveMovie.add(idMovieRemove);
@@ -104,7 +104,7 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
             }
         });
 
-        //ActionListener : ouvre le panel pour ajouter un film"
+        //ActionListener : ouvre le panel pour ajouter un film
         addMovie.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

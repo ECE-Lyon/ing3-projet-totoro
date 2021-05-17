@@ -8,24 +8,30 @@ import javax.swing.*;
 
 
 public class ApplicationFrameCustomers extends JFrame implements ActionListener {
-    JButton submit,submitCreationCompte, newAccount, freeConnection;
+
+    //Déclaration des variables
+    JButton submit, submitCreationCompte, newAccount, freeConnection;
     JButton bookMovie[] = new JButton[3];
-    JLabel inscription, lNewLogin, lNewPassword;
+    JLabel inscription, labelNewLogin, labelNewPassword;
     MemberCustomers MC, memberCustomersCheck;
+    Movie movie1, movie2, movie3;
+    MovieDao movieDao;
     JTextField login, newLogin;
     JPasswordField password, newPassword;
     Container contentPane;
-    JPanel panelPrincipal, panelMember, panelCreationCompte, panelCreationCompteInscription,
-            panelCreationCompteFormulaire, panelGuest, panelMainMenu;
+    JPanel panelPrincipal, panelMember, panelCreationCompte, panelMenuInscription, panelLabelInscription,
+            panelGuest, panelMainMenu, panelButtonCreateAccount;
     JPanel panelMovie[] = new JPanel[3];
 
+
     public ApplicationFrameCustomers() {
-        //connection avec la base de données des films
-        Movie movie1 = new Movie();
-        Movie movie2 = new Movie();
-        Movie movie3 = new Movie();
+
+        //Connection avec la base de données des films
+        movie1 = new Movie();
+        movie2 = new Movie();
+        movie3 = new Movie();
         try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
-            MovieDao movieDao = new MovieDaoImpl(connection);
+            movieDao = new MovieDaoImpl(connection);
             movie1 = movieDao.get(1);
             movie2 = movieDao.get(2);
             movie3 = movieDao.get(3);
@@ -33,65 +39,96 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
             throwables.printStackTrace();
         }
 
-        //Création top-level container
+
+
+        //Création du top-level container
         contentPane = getContentPane();
         setTitle("Réservation cinéma");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+
+        //Création d'un panel principal regroupant les sous-panels
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new FlowLayout());
 
-        //Création panel invité
+        //Création d'un sous-panel pour le bouton "Réserver sans connexion"
         panelGuest = new JPanel();
         freeConnection = new JButton("Réserver sans connexion");
         panelGuest.add(freeConnection);
-        JComboBox jComboBox = new JComboBox();
+        panelPrincipal.add(panelGuest);
 
-        //Création panel membre pour s'identifier
-        panelMember = new JPanel();
-        panelMember.setLayout(new GridLayout(5,2));
-        //Ajout des composants
-        panelMember.add(new JLabel("Espace Membre"));
-        newAccount = new JButton("Creer un nouveau compte");
-        newAccount.addActionListener(this);
+        //Création d'un sous-panel pour le bouton "Créer un nouveau compte"
+        panelButtonCreateAccount = new JPanel();
         newAccount = new JButton("Créer un nouveau compte");
-        panelMember.add(newAccount);
+        panelButtonCreateAccount.add(newAccount);
+        panelPrincipal.add(panelButtonCreateAccount);
+
+        //Création d'un sous-panel membre pour s'identifier
+        panelMember = new JPanel();
+        panelMember.setLayout(new GridLayout(4,2));
+        panelMember.add(new JLabel("Espace Membre"));
+        panelMember.add(new JLabel(""));
+
         panelMember.add(new JLabel("Identifiant : "));
         login = new JTextField();
         panelMember.add(login);
+
         panelMember.add(new JLabel("Mot de passe : "));
         password = new JPasswordField();
         panelMember.add(password);
+
         panelMember.add(new JLabel(""));
         submit = new JButton("Soumettre");
         panelMember.add(submit);
 
+        panelPrincipal.add(panelMember);
 
-        //Creation panel pour s'inscrire
+
+        //Ajout du panelPrincipal au contentPane
+        getContentPane().add(panelPrincipal);
+
+
+
+        //Création du menu pour l'inscription (panel regroupant 2 sous-panels)
+        panelMenuInscription = new JPanel();
+        panelMenuInscription.setLayout(new FlowLayout());
+
+        //Création d'un sous-panel pour le label "Inscription"
+        panelLabelInscription = new JPanel();
+        inscription = new JLabel("Inscription");
+        inscription.setFont(new Font("Calibri", Font.BOLD, 60));
+        panelLabelInscription.add(inscription);
+        panelMenuInscription.add(panelLabelInscription);
+
+        //Création d'un sous-panel pou le formulaire d'inscription
         panelCreationCompte = new JPanel();
-        panelCreationCompteInscription = new JPanel();
-        panelCreationCompteFormulaire = new JPanel(new GridLayout(3,2));
-        //ajout de ses composants
-        inscription = new JLabel("Inscription :");
-        lNewLogin = new JLabel("Veillez entrez un identifiant");
-        final String[] loginARemplir = {"login"};
-        final String[] passwordARemplir = {"mot de passe"};
-        newLogin = new JTextField(loginARemplir[0]);
-        lNewPassword = new JLabel("Veuillez entrez un mot de passe");
-        newPassword = new JPasswordField(passwordARemplir[0]);
-        submitCreationCompte = new JButton("Création compte");
-        panelCreationCompteInscription.add(inscription);
-        panelCreationCompteFormulaire.add(lNewLogin);
-        panelCreationCompteFormulaire.add(newLogin);
-        panelCreationCompteFormulaire.add(lNewPassword);
-        panelCreationCompteFormulaire.add(newPassword);
-        panelCreationCompteFormulaire.add(submitCreationCompte);
-        panelCreationCompte.add(panelCreationCompteInscription);
-        panelCreationCompte.add(panelCreationCompteFormulaire);
+        panelCreationCompte.setLayout(new GridLayout(4,2));
 
-        //Création menu principal après connection
+        labelNewLogin = new JLabel("Identifiant : ");
+        panelCreationCompte.add(labelNewLogin);
+        final String[] loginARemplir = {"login"};
+        newLogin = new JTextField(loginARemplir[0]);
+        panelCreationCompte.add(newLogin);
+
+        labelNewPassword = new JLabel("Mot de passe : ");
+        panelCreationCompte.add(labelNewPassword);
+        final String[] passwordARemplir = {"mot de passe"};
+        newPassword = new JPasswordField(passwordARemplir[0]);
+        panelCreationCompte.add(newPassword);
+
+        panelCreationCompte.add(new JLabel(""));
+        submitCreationCompte = new JButton("Création du compte");
+        panelCreationCompte.add(submitCreationCompte);
+
+        panelMenuInscription.add(panelCreationCompte);
+
+
+
+        //Création du menu principal après connexion
         panelMainMenu = new JPanel();
         panelMainMenu.setLayout(new GridLayout(1,3));
-        //Panel pour le film 1
+
+        //Sous-panel pour le film 1
         panelMovie[0] = new JPanel();
         ImageIcon imageIcon1 = new ImageIcon(movie1.getUrl());
         JLabel jLabel = new JLabel(imageIcon1);
@@ -103,7 +140,7 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         bookMovie[0] = new JButton("Voir ce film");
         panelMovie[0].add(bookMovie[0]);
 
-        //Panel film 2
+        //Sous-panel pour le film 2
         panelMovie[1] = new JPanel();
         ImageIcon imageIcon2 = new ImageIcon(movie2.getUrl());
         panelMovie[1].add(new JLabel(imageIcon2));
@@ -114,7 +151,7 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         bookMovie[1] = new JButton("Voir ce film");
         panelMovie[1].add(bookMovie[1]);
 
-        //Panel film 3
+        //Sous-panel pour le film 3
         panelMovie[2] = new JPanel();
         ImageIcon imageIcon3 = new ImageIcon(movie3.getUrl());
         panelMovie[2].add(new JLabel(imageIcon3));
@@ -129,13 +166,9 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         panelMainMenu.add(panelMovie[1]);
         panelMainMenu.add(panelMovie[2]);
 
-        //ajout au contentPane
-        getContentPane().add(panelPrincipal);
-        panelPrincipal.add(panelGuest);
-        panelPrincipal.add(panelMember);
 
 
-        //ouvre le panel du menu pour réserver les films
+        //ActionListener pour ouvrir le menu pour réserver les films (panelMainMenu)
         freeConnection.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -147,19 +180,18 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
             }
         });
 
-        //Ouvre le panel pour s'inscrire
+        //ActionListener pour ouvrir le menu pour s'inscrire (panelMenuInscription)
         newAccount.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource() == newAccount) {
                     panelPrincipal.setVisible(false);
-                    contentPane.add(panelCreationCompte);
-
+                    contentPane.add(panelMenuInscription);
                 }
             }
         });
 
-        //listener du bouton soumettre
+        //ActionListener pour créer un compte
         submitCreationCompte.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -174,14 +206,13 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
                         throwables.printStackTrace();
                     }
                     panelCreationCompte.setVisible(false);
-                    panelPrincipal.add(new JLabel("Votre compte a bien été créé vous pouvez vous connecter"));
+                    panelPrincipal.add(new JLabel("Votre compte a bien été créé, vous pouvez vous connecter"));
                     panelPrincipal.setVisible(true);
                 }
             }
         });
 
-
-        //ActionListener vérifiant l'identité de l'utilisateur
+        //ActionListener pour vérifier l'identité de l'utilisateur
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -198,7 +229,7 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
                     if(memberCustomersCheck == null) {
                         login.setText("");
                         password.setText("");
-                        panelPrincipal.add(new JLabel("Erreur de login ou de mot de passe, réessayer"));
+                        panelPrincipal.add(new JLabel("Erreur d'identifiant et/ou de mot de passe, veuillez réessayer"));
                         panelPrincipal.setVisible(false);
                         panelPrincipal.setVisible(true);
                     }
@@ -218,6 +249,7 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
     }
 
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -226,7 +258,5 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
 
     public static void main(String[] args) {
         ApplicationFrameCustomers applicationFrameCustomers = new ApplicationFrameCustomers();
-
-
     }
 }
