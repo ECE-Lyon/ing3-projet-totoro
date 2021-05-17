@@ -171,8 +171,6 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
             }
         });
 
-
-
         setSize(600, 400);
         setVisible(true);
 

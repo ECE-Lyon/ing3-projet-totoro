@@ -1,0 +1,4 @@
+2021-05-14 16:50:25 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "UTILISATEUR" non trouvée
+Table "UTILISATEUR" not found; SQL statement:
+INSERT into utilisateur(login, mdp) values ( 'Melvin' , 'pass'); [42102-200]

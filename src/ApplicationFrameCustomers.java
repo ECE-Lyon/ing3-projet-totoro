@@ -42,9 +42,9 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
 
         //Création panel invité
         panelGuest = new JPanel();
-        panelGuest.setLayout(new GridLayout());
         freeConnection = new JButton("Réserver sans connexion");
         panelGuest.add(freeConnection);
+        JComboBox jComboBox = new JComboBox();
 
         //Création panel membre pour s'identifier
         panelMember = new JPanel();
