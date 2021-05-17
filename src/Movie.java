@@ -1,11 +1,13 @@
 public class Movie {
-    private String title;
-    private enum enumGenre {ACTION, AVENTURE, COMEDIE, FAMILLE, DRAME, CATASTROPHE, POLICIER, DOCUMENTAIRE, FANTASTIQUE, HISTORIQUE, HORREUR, COMEDIE_MUSICALE, SCIENCE_FICTION, THRILLER, WESTERN}
-    private enumGenre[] genre;
-    private String date;
-    private Integer time;
+    private String title, url;
+    public enum enumGenre {ACTION, AVENTURE, COMEDIE, FAMILLE, DRAME, CATASTROPHE, POLICIER, DOCUMENTAIRE, FANTASTIQUE, HISTORIQUE, HORREUR, COMEDIE_MUSICALE, SCIENCE_FICTION, THRILLER, WESTERN}
+    private enumGenre genreE;
+    private String date, genre;
+    private Integer id, time;
 
-    public Movie(String title, String date, Integer time, enumGenre[] genre) {
+    public Movie(){};
+
+    public Movie(String title, String date, Integer time, String genre) {
         this.title = title;
         this.date = date;
         this.time = time;
@@ -20,12 +22,12 @@ public class Movie {
         this.title = title;
     }
 
-    public String getDate() {
-        return date;
+    public String getUrl() {
+        return url;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Integer getTime() {
@@ -34,5 +36,29 @@ public class Movie {
 
     public void setTime(Integer time) {
         this.time = time;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

@@ -8,7 +8,7 @@ import javax.swing.*;
 
 
 public class ApplicationFrameCustomers extends JFrame implements ActionListener {
-    JButton submit,submitCreationCompte, newAccount, freeConnexion, movie1, movie2, movie3;
+    JButton submit,submitCreationCompte, newAccount, freeConnexion, addMovie1, addMovie2, addMovie3;
     JLabel inscription, lNewLogin, lNewPassword;
     MemberCustomers MC;
     JTextField login, newLogin;
@@ -17,9 +17,23 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
     JPanel panelPrincipal, panelMember, panelCreationCompte, panelCreationCompteInscription, panelCreationCompteFormulaire, panelGuest, panelMainMenu, panelMovie1, panelMovie2, panelMovie3;
 
     public ApplicationFrameCustomers() {
+        //connection avec la base de données des films
+        Movie movie1 = new Movie();
+        Movie movie2 = new Movie();
+        Movie movie3 = new Movie();
+        try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
+            MovieDao movieDao = new MovieDaoImpl(connection);
+            movie1 = movieDao.get(1);
+            movie2 = movieDao.get(2);
+            movie3 = movieDao.get(3);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
         //Création top-level container
-        setTitle("Réservation cinéma");
         contentPane = getContentPane();
+        setTitle("Réservation cinéma");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new FlowLayout());
 
@@ -75,25 +89,26 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         panelMainMenu = new JPanel();
         panelMainMenu.setLayout(new GridLayout(1,3));
         panelMovie1 = new JPanel();
-        panelMovie1.setLayout(new GridLayout(6,1));
-        panelMovie1.add(new JLabel("photo film 1"));
-        panelMovie1.add(new JLabel("titre film 1"));
-        panelMovie1.add(new JLabel("genre film 1"));
-        panelMovie1.add(new JLabel("date de sortie film 1"));
-        panelMovie1.add(new JLabel("durée en minutes film 1"));
-        movie1 = new JButton("Voir ce film");
+        ImageIcon imageIcon = new ImageIcon(movie1.getUrl());
+        JLabel jLabel = new JLabel(imageIcon);
+        panelMovie1.add(jLabel);
+        panelMovie1.add(new JLabel(movie1.getTitle()));
+        panelMovie1.add(new JLabel(movie1.getGenre()));
+        panelMovie1.add(new JLabel(movie1.getDate()));
+        panelMovie1.add(new JLabel(movie1.getTime() + " minutes"));
+        addMovie1 = new JButton("Voir ce film");
 
-        panelMovie1.add(movie1);
+        panelMovie1.add(addMovie1);
 
         panelMovie2 = new JPanel();
         panelMovie2.setLayout(new GridLayout(6,1));
-        panelMovie2.add(new JLabel("photo film 2"));
-        panelMovie2.add(new JLabel("titre film 2"));
-        panelMovie2.add(new JLabel("genre film 2"));
-        panelMovie2.add(new JLabel("date de sortie film 2"));
-        panelMovie2.add(new JLabel("durée en minutes film 2"));
-        movie2 = new JButton("Voir ce film");
-        panelMovie2.add(movie2);
+        /*panelMovie2.add(new JLabel(movie2.getUrl()));
+        panelMovie2.add(new JLabel(movie2.getTitle()));
+        panelMovie2.add(new JLabel("genre encore à régler"));
+        panelMovie2.add(new JLabel(movie2.getDate()));
+        panelMovie2.add(new JLabel(movie2.getTime() + " minutes"));*/
+        addMovie2 = new JButton("Voir ce film");
+        panelMovie2.add(addMovie2);
 
         panelMovie3 = new JPanel();
         panelMovie3.setLayout(new FlowLayout());
@@ -102,8 +117,8 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         panelMovie3.add(new JLabel("genre film 3"));
         panelMovie3.add(new JLabel("date de sortie film 3"));
         panelMovie3.add(new JLabel("durée en minutes film 3"));
-        movie3 = new JButton("Voir ce film");
-        panelMovie3.add(movie3);
+        addMovie3 = new JButton("Voir ce film");
+        panelMovie3.add(addMovie3);
 
         panelMainMenu.add(panelMovie1);
         panelMainMenu.add(panelMovie2);

@@ -2,11 +2,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class ApplicationFrameEmployees extends JFrame implements ActionListener{
     Employees E;
-    JButton connect, addMovie, removeMovie;
-    JTextField login, titleNewMovie, genreNewMovie;
+    Movie movie;
+    JButton connect, addMovie, removeMovie, confirmAddMovie;
+    JTextField login, titleNewMovie, genreNewMovie, idNewMovie, dateNewMovie, timeNewMovie, urlNewMovie;
     JPasswordField password;
     Container contentPane;
     JPanel panelPrincipal, panelWelcome, panelConnection, panelMenu, panelAddMovie;
@@ -14,9 +18,11 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
 
 
     public ApplicationFrameEmployees() {
+
         //Création du top level container de l'application
         setTitle("Espace employés");
         contentPane = getContentPane();
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new FlowLayout());
 
@@ -41,6 +47,37 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
         connect = new JButton("Se connecter");
         panelConnection.add(connect);
 
+        //ActionListener : une fois connecté, l'employé choisit s'il faut ajouter ou supprimer un film
+        panelMenu = new JPanel();
+        panelMenu.setLayout(new FlowLayout());
+        addMovie = new JButton("Ajouter un film");
+        panelMenu.add(addMovie);
+        removeMovie = new JButton("Enlever un film");
+        panelMenu.add(removeMovie);
+
+        //Panel pour ajouter un film
+        panelAddMovie = new JPanel();
+        panelAddMovie.add(new JLabel("Ajout d'un film"));
+        panelAddMovie.add(new JLabel("Quelle sera l'emplacement du film ?"));
+        idNewMovie = new JTextField(5);
+        panelAddMovie.add(idNewMovie);
+        panelAddMovie.add(new JLabel("Url de l'image :"));
+        urlNewMovie = new JTextField(5);
+        panelAddMovie.add(urlNewMovie);
+        panelAddMovie.add(new JLabel("Titre : "));
+        titleNewMovie = new JTextField(5);
+        panelAddMovie.add(titleNewMovie);
+        panelAddMovie.add(new JLabel("Genre : "));
+        genreNewMovie = new JTextField(5);
+        panelAddMovie.add(genreNewMovie);
+        panelAddMovie.add(new JLabel("Date de sortie :"));
+        dateNewMovie = new JTextField(5);
+        panelAddMovie.add(dateNewMovie);
+        panelAddMovie.add(new JLabel("Durée du film :"));
+        timeNewMovie = new JTextField(5);
+        panelAddMovie.add(timeNewMovie);
+        confirmAddMovie = new JButton("Ajout du film");
+        panelAddMovie.add(confirmAddMovie);
 
         //Ajout au contentPane
         getContentPane().add(panelPrincipal);
@@ -48,13 +85,7 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
         panelPrincipal.add(panelConnection);
 
 
-        //ActionListener : une fois connecté, l'employé choisit si il faut ajouter ou supprimer un film
-        panelMenu = new JPanel();
-        panelMenu.setLayout(new FlowLayout());
-        addMovie = new JButton("Ajouter un film");
-        panelMenu.add(addMovie);
-        removeMovie = new JButton("Enlever un film");
-        panelMenu.add(removeMovie);
+
 
         connect.addActionListener(new ActionListener() {
             @Override
@@ -67,23 +98,38 @@ public class ApplicationFrameEmployees extends JFrame implements ActionListener{
         });
 
 
-        //Panel pour ajouter un film
-        panelAddMovie = new JPanel();
-        panelAddMovie.setLayout(new FlowLayout());
-        panelAddMovie.add(new JLabel("Ajout d'un film"));
-        panelAddMovie.add(new JLabel(""));
-        panelAddMovie.add(new JLabel("Titre : "));
-        titleNewMovie = new JTextField();
-        panelAddMovie.add(titleNewMovie);
-        panelAddMovie.add(new JLabel("Genre : "));
-        genreNewMovie = new JTextField();
-        panelAddMovie.add(genreNewMovie);
+
 
         //ActionListener : clic "Ajouter un film"
         addMovie.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == addMovie){
+                    panelMenu.setVisible(false);
+                    contentPane.add(panelAddMovie);
+                }
+            }
+        });
+        //Listener pour ajouter un film à la base de donnée
+        confirmAddMovie.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == confirmAddMovie){
+                    movie = new Movie();
+                    int intIdNewMovie = Integer.parseInt(idNewMovie.getText());
+                    int intTimeNewMovie = Integer.parseInt(timeNewMovie.getText());
+                    movie.setId(intIdNewMovie);
+                    movie.setTitle(titleNewMovie.getText());
+                    movie.setDate(dateNewMovie.getText());
+                    movie.setTime(intTimeNewMovie);
+                    movie.setUrl(urlNewMovie.getText());
+                    movie.setGenre(genreNewMovie.getText());
+                    try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
+                        MovieDao movieDao = new MovieDaoImpl(connection);
+                        movieDao.add(movie);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
 
                 }
             }
