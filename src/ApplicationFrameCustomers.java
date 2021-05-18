@@ -119,7 +119,7 @@ public class ApplicationFrameCustomers extends JFrame{
         panelCreationCompte.add(newPassword);
 
         panelCreationCompte.add(new JLabel("Catégorie d'âge :"));
-        String[] boxItems = new String[]{"NORMAL", "ENFANT(jusqu'à 12 ans)", "SENIOR(à partir de 65 ans"};
+        String[] boxItems = new String[]{"NORMAL", "ENFANT (jusqu'à 12 ans)", "SENIOR (à partir de 65 ans)"};
         boxCategorieAge = new JComboBox<>(boxItems);
         panelCreationCompte.add(boxCategorieAge);
 
@@ -206,7 +206,9 @@ public class ApplicationFrameCustomers extends JFrame{
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
+
                 panelCreationCompte.setVisible(false);
+                panelPrincipal.add(new JLabel("   Votre compte a bien été créé, vous pouvez vous connecter   "));
                 panelLabelInscription.setVisible(false);
                 panelMenuInscription.setVisible(false);
                 panelPrincipal.add(new JLabel("Votre compte a bien été créé, vous pouvez vous connecter"));
@@ -234,63 +236,63 @@ public class ApplicationFrameCustomers extends JFrame{
                         contentPane.add(panelMainMenu);
                     }
 
-
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
-
-
-
             }
         });
 
+        //ActionListener pour réserver une séance pour le film 1
         bookMovie[0].addActionListener(e -> {
             if (e.getSource() == bookMovie[0]) {
                 panelMovie[0].removeAll();
                 panelMovie[0].setVisible(false);
                 panelMovie[0].setVisible(true);
                 if(memberCustomersCheck == null) {
-                    panelMovie[0].add(new JLabel("Réservation au tarif : PLEIN TARIF "));
+                    panelMovie[0].add(new JLabel("PLEIN TARIF"));
                 }
                 else{
-                    panelMovie[0].add(new JLabel("Réservation au tarif : " + memberCustomersCheck.getCategorieAge()));
+                    panelMovie[0].add(new JLabel("Tarif " + memberCustomersCheck.getCategorieAge()));
                 }
-
 
                 panelMovie[0].add(new JLabel("Quel jour ?"));
                 String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
                 JComboBox comboBoxJours = new JComboBox<>(boxJours);
                 panelMovie[0].add(comboBoxJours);
 
-                panelMovie[0].add(new JLabel("A quelle heure ?"));
-                String[] boxHeures = new String[]{"8H", "10H", "12H", "14H", "16H", "18h"};
+                panelMovie[0].add(new JLabel("À quelle heure ?"));
+                String[] boxHeures = new String[]{"10h", "12h", "14h", "16h", "18h", "20h"};
                 JComboBox comboBoxHeures = new JComboBox<>(boxHeures);
                 panelMovie[0].add(comboBoxHeures);
 
-                confirmBookMovie[0] = new JButton("Confirmer Réservation");
+                confirmBookMovie[0] = new JButton("Confirmer réservation");
                 panelMovie[0].add(confirmBookMovie[0]);
+
                 confirmBookMovie[0].addActionListener(e1 -> {
                     if (e1.getSource() == confirmBookMovie[0]) {
                         panelMovie[0].add(new JLabel("Votre ticket est réservé."));
-                        panelMovie[0].add(new JLabel("A bientôt dans nos cinémas !"));
+                        panelMovie[0].add(new JLabel("À bientôt dans nos cinémas !"));
                         panelMovie[0].setVisible(false);
                         panelMovie[0].setVisible(true);
+
                     }
+
+
                 });
             }
         });
 
-
+        //ActionListener pour réserver une séance pour le film 2
         bookMovie[1].addActionListener(e -> {
             if (e.getSource() == bookMovie[1]) {
                 panelMovie[1].removeAll();
                 panelMovie[1].setVisible(false);
                 panelMovie[1].setVisible(true);
                 if(memberCustomersCheck == null) {
-                    panelMovie[1].add(new JLabel("Réservation au tarif : PLEIN TARIF "));
+                    panelMovie[1].add(new JLabel("PLEIN TARIF "));
                 }
                 else{
-                    panelMovie[1].add(new JLabel("Réservation au tarif : " + memberCustomersCheck.getCategorieAge()));
+                    panelMovie[1].add(new JLabel("Tarif " + memberCustomersCheck.getCategorieAge()));
                 }
 
                 panelMovie[1].add(new JLabel("Quel jour ?"));
@@ -298,37 +300,39 @@ public class ApplicationFrameCustomers extends JFrame{
                 JComboBox comboBoxJours = new JComboBox<>(boxJours);
                 panelMovie[1].add(comboBoxJours);
 
-                panelMovie[1].add(new JLabel("A quelle heure ?"));
-                String[] boxHeures = new String[]{"8H", "10H", "12H", "14H", "16H", "18h"};
+                panelMovie[1].add(new JLabel("À quelle heure ?"));
+                String[] boxHeures = new String[]{"10h", "12h", "14h", "16h", "18h", "20h"};
                 JComboBox comboBoxHeures = new JComboBox<>(boxHeures);
                 panelMovie[1].add(comboBoxHeures);
 
-                confirmBookMovie[1] = new JButton("Confirmer Réservation");
+                confirmBookMovie[1] = new JButton("Confirmer réservation");
                 panelMovie[1].add(confirmBookMovie[1]);
 
                 confirmBookMovie[1].addActionListener(e1 -> {
                     if (e1.getSource() == confirmBookMovie[1]) {
                         panelMovie[1].add(new JLabel("Votre ticket est réservé."));
-                        panelMovie[1].add(new JLabel("A bientôt dans nos cinémas !"));
+                        panelMovie[1].add(new JLabel("À bientôt dans nos cinémas !"));
                         panelMovie[1].setVisible(false);
                         panelMovie[1].setVisible(true);
 
                     }
                 });
-
             }
+
+
         });
 
+        //ActionListener pour réserver une séance pour le film 3
         bookMovie[2].addActionListener(e -> {
             if (e.getSource() == bookMovie[2]) {
                 panelMovie[2].removeAll();
                 panelMovie[2].setVisible(false);
                 panelMovie[2].setVisible(true);
                 if(memberCustomersCheck == null) {
-                    panelMovie[2].add(new JLabel("Réservation au tarif : PLEIN TARIF "));
+                    panelMovie[2].add(new JLabel("PLEIN TARIF "));
                 }
                 else{
-                    panelMovie[2].add(new JLabel("Réservation au tarif : " + memberCustomersCheck.getCategorieAge()));
+                    panelMovie[2].add(new JLabel("Tarif " + memberCustomersCheck.getCategorieAge()));
                 }
 
 
@@ -337,20 +341,21 @@ public class ApplicationFrameCustomers extends JFrame{
                 JComboBox comboBoxJours = new JComboBox<>(boxJours);
                 panelMovie[2].add(comboBoxJours);
 
-                panelMovie[2].add(new JLabel("A quelle heure ?"));
-                String[] boxHeures = new String[]{"8H", "10H", "12H", "14H", "16H", "18h"};
+                panelMovie[2].add(new JLabel("À quelle heure ?"));
+                String[] boxHeures = new String[]{"10h", "12h", "14h", "16h", "18h", "20h"};
                 JComboBox comboBoxHeures = new JComboBox<>(boxHeures);
                 panelMovie[2].add(comboBoxHeures);
 
-                confirmBookMovie[2] = new JButton("Confirmer Réservation");
+                confirmBookMovie[2] = new JButton("Confirmer réservation");
                 panelMovie[2].add(confirmBookMovie[2]);
 
                 confirmBookMovie[2].addActionListener(e1 -> {
                     if (e1.getSource() == confirmBookMovie[2]) {
                         panelMovie[2].add(new JLabel("Votre ticket est réservé."));
-                        panelMovie[2].add(new JLabel("A bientôt dans nos cinémas !"));
+                        panelMovie[2].add(new JLabel("À bientôt dans nos cinémas !"));
                         panelMovie[2].setVisible(false);
                         panelMovie[2].setVisible(true);
+
                     }
                 });
             }
@@ -360,11 +365,6 @@ public class ApplicationFrameCustomers extends JFrame{
         setSize(600,400);
         setVisible(true);
     }
-
-
-
-
-
 
 
 
