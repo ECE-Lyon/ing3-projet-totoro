@@ -34,7 +34,7 @@ public class ApplicationFrameEmployees extends JFrame{
         //Création d'un sous-panel pour le label "Bienvenue sur l'espace employés"
         panelWelcome = new JPanel();
         welcome = new JLabel("Bienvenue sur l'espace employés");
-        welcome.setFont(new Font("Calibri", Font.BOLD, 30));
+        welcome.setFont(new Font("Calibri", Font.BOLD, 28));
         panelWelcome.add(welcome);
         panelPrincipal.add(panelWelcome);
 
@@ -190,6 +190,6 @@ public class ApplicationFrameEmployees extends JFrame{
 
 
     public static void main(String[] args) {
-        ApplicationFrameEmployees applicationFrameEmployees = new ApplicationFrameEmployees();
+        new ApplicationFrameEmployees();
     }
 }
