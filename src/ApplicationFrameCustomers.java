@@ -11,8 +11,8 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
 
     //Déclaration des variables
     private final JButton submit, submitCreationCompte, newAccount, freeConnection;
-    private final JButton bookMovie[] = new JButton[3];
-    private final JButton confirmBookMovie[] = new JButton[3];
+    private final JButton[] bookMovie = new JButton[3];
+    final JButton[] confirmBookMovie = new JButton[3];
     final JLabel inscription, labelNewLogin, labelNewPassword;
     private MemberCustomers MC, memberCustomersCheck;
     Movie movie1, movie2, movie3;
@@ -22,10 +22,8 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
     private final Container contentPane;
     final JPanel panelPrincipal, panelMember, panelCreationCompte, panelMenuInscription, panelLabelInscription,
             panelGuest, panelMainMenu, panelButtonCreateAccount;
-    private final JPanel panelMovie[] = new JPanel[3];
+    private final JPanel[] panelMovie = new JPanel[3];
     private final JComboBox boxCategorieAge;
-    String[] boxNbrPersonnes = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-    JComboBox comboBoxNbrPersonnes = new JComboBox<>(boxNbrPersonnes);
 
 
     public ApplicationFrameCustomers() {
@@ -221,23 +219,25 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
                     memberCustomersCheck = new MemberCustomers();
                     UserDao userDao = new UserDaoImpl(connection);
                     memberCustomersCheck = userDao.get(login.getText(), password.getText());
+                    if(memberCustomersCheck == null) {
+                        login.setText("");
+                        password.setText("");
+                        panelPrincipal.add(new JLabel("Erreur d'identifiant et/ou de mot de passe, veuillez réessayer"));
+                        panelPrincipal.setVisible(false);
+                        panelPrincipal.setVisible(true);
+                    }
+
+                    else{
+                        panelPrincipal.setVisible(false);
+                        contentPane.add(panelMainMenu);
+                    }
+
 
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
 
-                if(memberCustomersCheck == null) {
-                    login.setText("");
-                    password.setText("");
-                    panelPrincipal.add(new JLabel("Erreur d'identifiant et/ou de mot de passe, veuillez réessayer"));
-                    panelPrincipal.setVisible(false);
-                    panelPrincipal.setVisible(true);
-                }
 
-                else{
-                    panelPrincipal.setVisible(false);
-                    contentPane.add(panelMainMenu);
-                }
 
             }
         });
@@ -247,7 +247,13 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
                 panelMovie[0].removeAll();
                 panelMovie[0].setVisible(false);
                 panelMovie[0].setVisible(true);
-                panelMovie[0].add(new JLabel("Réservation"));
+                if(memberCustomersCheck == null) {
+                    panelMovie[0].add(new JLabel("Réservation au tarif : PLEIN TARIF "));
+                }
+                else{
+                    panelMovie[0].add(new JLabel("Réservation au tarif : " + memberCustomersCheck.getCategorieAge()));
+                }
+
 
                 panelMovie[0].add(new JLabel("Quel jour ?"));
                 String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
@@ -261,18 +267,32 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
 
                 confirmBookMovie[0] = new JButton("Confirmer Réservation");
                 panelMovie[0].add(confirmBookMovie[0]);
+                confirmBookMovie[0].addActionListener(e1 -> {
+                    if (e1.getSource() == confirmBookMovie[0]) {
+                        panelMovie[0].add(new JLabel("Votre ticket est réservé."));
+                        panelMovie[0].add(new JLabel("A bientôt dans nos cinéma !"));
+                        panelMovie[0].setVisible(false);
+                        panelMovie[0].setVisible(true);
 
+                    }
+
+
+                });
             }
-
-
         });
+
 
         bookMovie[1].addActionListener(e -> {
             if (e.getSource() == bookMovie[1]) {
                 panelMovie[1].removeAll();
                 panelMovie[1].setVisible(false);
                 panelMovie[1].setVisible(true);
-                panelMovie[1].add(new JLabel("Réservation"));
+                if(memberCustomersCheck == null) {
+                    panelMovie[1].add(new JLabel("Réservation au tarif : PLEIN TARIF "));
+                }
+                else{
+                    panelMovie[1].add(new JLabel("Réservation au tarif : " + memberCustomersCheck.getCategorieAge()));
+                }
 
                 panelMovie[1].add(new JLabel("Quel jour ?"));
                 String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
@@ -297,7 +317,12 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
                 panelMovie[2].removeAll();
                 panelMovie[2].setVisible(false);
                 panelMovie[2].setVisible(true);
-                panelMovie[2].add(new JLabel("Réservation"));
+                if(memberCustomersCheck == null) {
+                    panelMovie[2].add(new JLabel("Réservation au tarif : PLEIN TARIF "));
+                }
+                else{
+                    panelMovie[2].add(new JLabel("Réservation au tarif : " + memberCustomersCheck.getCategorieAge()));
+                }
 
 
                 panelMovie[2].add(new JLabel("Quel jour ?"));
@@ -312,16 +337,15 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
 
                 confirmBookMovie[2] = new JButton("Confirmer Réservation");
                 panelMovie[2].add(confirmBookMovie[2]);
-
             }
-
-
         });
 
 
         setSize(600,400);
         setVisible(true);
     }
+
+
 
 
     @Override
