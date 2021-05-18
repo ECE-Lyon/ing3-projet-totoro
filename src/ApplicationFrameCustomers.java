@@ -24,6 +24,8 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
             panelGuest, panelMainMenu, panelButtonCreateAccount;
     private final JPanel panelMovie[] = new JPanel[3];
     private final JComboBox boxCategorieAge;
+    String[] boxNbrPersonnes = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+    JComboBox comboBoxNbrPersonnes = new JComboBox<>(boxNbrPersonnes);
 
 
     public ApplicationFrameCustomers() {
@@ -247,11 +249,6 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
                 panelMovie[0].setVisible(true);
                 panelMovie[0].add(new JLabel("Réservation"));
 
-                panelMovie[0].add(new JLabel("Pour combien de personnes ?"));
-                String[] boxNbrPersonnes = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-                JComboBox comboBoxNbrPersonnes = new JComboBox<>(boxNbrPersonnes);
-                panelMovie[0].add(comboBoxNbrPersonnes);
-
                 panelMovie[0].add(new JLabel("Quel jour ?"));
                 String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
                 JComboBox comboBoxJours = new JComboBox<>(boxJours);
@@ -276,11 +273,6 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
                 panelMovie[1].setVisible(false);
                 panelMovie[1].setVisible(true);
                 panelMovie[1].add(new JLabel("Réservation"));
-
-                panelMovie[1].add(new JLabel("Pour combien de personnes ?"));
-                String[] boxNbrPersonnes = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-                JComboBox comboBoxNbrPersonnes = new JComboBox<>(boxNbrPersonnes);
-                panelMovie[1].add(comboBoxNbrPersonnes);
 
                 panelMovie[1].add(new JLabel("Quel jour ?"));
                 String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
@@ -307,10 +299,6 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
                 panelMovie[2].setVisible(true);
                 panelMovie[2].add(new JLabel("Réservation"));
 
-                panelMovie[2].add(new JLabel("Pour combien de personnes ?"));
-                String[] boxNbrPersonnes = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-                JComboBox comboBoxNbrPersonnes = new JComboBox<>(boxNbrPersonnes);
-                panelMovie[2].add(comboBoxNbrPersonnes);
 
                 panelMovie[2].add(new JLabel("Quel jour ?"));
                 String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
