@@ -107,13 +107,13 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
 
         labelNewLogin = new JLabel("Identifiant : ");
         panelCreationCompte.add(labelNewLogin);
-        final String[] loginARemplir = {"login"};
+        final String[] loginARemplir = {""};
         newLogin = new JTextField(loginARemplir[0]);
         panelCreationCompte.add(newLogin);
 
         labelNewPassword = new JLabel("Mot de passe : ");
         panelCreationCompte.add(labelNewPassword);
-        final String[] passwordARemplir = {"mot de passe"};
+        final String[] passwordARemplir = {""};
         newPassword = new JPasswordField(passwordARemplir[0]);
         panelCreationCompte.add(newPassword);
 
@@ -255,11 +255,11 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
     }
 
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
+
 
 
     public static void main(String[] args) {
