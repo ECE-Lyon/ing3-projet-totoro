@@ -10,20 +10,20 @@ import javax.swing.*;
 public class ApplicationFrameCustomers extends JFrame implements ActionListener {
 
     //Déclaration des variables
-    private JButton submit, submitCreationCompte, newAccount, freeConnection;
-    private JButton bookMovie[] = new JButton[3];
-    private JButton confirmBookMovie[] = new JButton[3];
-    private JLabel inscription, labelNewLogin, labelNewPassword;
+    private final JButton submit, submitCreationCompte, newAccount, freeConnection;
+    private final JButton bookMovie[] = new JButton[3];
+    private final JButton confirmBookMovie[] = new JButton[3];
+    final JLabel inscription, labelNewLogin, labelNewPassword;
     private MemberCustomers MC, memberCustomersCheck;
-    private Movie movie1, movie2, movie3;
-    private MovieDao movieDao;
-    private JTextField login, newLogin;
-    private JPasswordField password, newPassword;
-    private Container contentPane;
-    private JPanel panelPrincipal, panelMember, panelCreationCompte, panelMenuInscription, panelLabelInscription,
+    Movie movie1, movie2, movie3;
+    MovieDao movieDao;
+    private final JTextField login, newLogin;
+    private final JPasswordField password, newPassword;
+    private final Container contentPane;
+    final JPanel panelPrincipal, panelMember, panelCreationCompte, panelMenuInscription, panelLabelInscription,
             panelGuest, panelMainMenu, panelButtonCreateAccount;
-    private JPanel panelMovie[] = new JPanel[3];
-    private JComboBox boxCategorieAge;
+    private final JPanel panelMovie[] = new JPanel[3];
+    private final JComboBox boxCategorieAge;
 
 
     public ApplicationFrameCustomers() {
@@ -176,179 +176,158 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
 
 
         //ActionListener pour ouvrir le menu pour réserver les films (panelMainMenu)
-        freeConnection.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == freeConnection){
-                    panelPrincipal.setVisible(false);
-                    contentPane.add(panelMainMenu);
-                    panelMainMenu.setVisible(true);
-                }
+        freeConnection.addActionListener(e -> {
+            if (e.getSource() == freeConnection){
+                panelPrincipal.setVisible(false);
+                contentPane.add(panelMainMenu);
+                panelMainMenu.setVisible(true);
             }
         });
 
         //ActionListener pour ouvrir le menu pour s'inscrire (panelMenuInscription)
-        newAccount.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(e.getSource() == newAccount) {
-                    panelPrincipal.setVisible(false);
-                    contentPane.add(panelMenuInscription);
-                }
+        newAccount.addActionListener(e -> {
+            if(e.getSource() == newAccount) {
+                panelPrincipal.setVisible(false);
+                contentPane.add(panelMenuInscription);
             }
         });
 
         //ActionListener pour créer un compte
-        submitCreationCompte.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(e.getSource() == submitCreationCompte) {
-                    MC = new MemberCustomers();
-                    MC.setLogin(newLogin.getText());
-                    MC.setPassword(newPassword.getText());
-                    int itemIndex = boxCategorieAge.getSelectedIndex();
-                    MC.setCategorieAge(boxItems[itemIndex]);
-                    try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
-                        UserDao userDao = new UserDaoImpl(connection);
-                        userDao.add(MC);
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-                    panelCreationCompte.setVisible(false);
-                    panelPrincipal.add(new JLabel("Votre compte a bien été créé, vous pouvez vous connecter"));
-                    panelPrincipal.setVisible(true);
+        submitCreationCompte.addActionListener(e -> {
+            if(e.getSource() == submitCreationCompte) {
+                MC = new MemberCustomers();
+                MC.setLogin(newLogin.getText());
+                MC.setPassword(newPassword.getText());
+                int itemIndex = boxCategorieAge.getSelectedIndex();
+                MC.setCategorieAge(boxItems[itemIndex]);
+                try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
+                    UserDao userDao = new UserDaoImpl(connection);
+                    userDao.add(MC);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
                 }
+                panelCreationCompte.setVisible(false);
+                panelPrincipal.add(new JLabel("Votre compte a bien été créé, vous pouvez vous connecter"));
+                panelPrincipal.setVisible(true);
             }
         });
 
         //ActionListener pour vérifier l'identité de l'utilisateur
-        submit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == submit){
-                    try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
-                        memberCustomersCheck = new MemberCustomers();
-                        UserDao userDao = new UserDaoImpl(connection);
-                        memberCustomersCheck = userDao.get(login.getText(), password.getText());
+        submit.addActionListener(e -> {
+            if (e.getSource() == submit){
+                try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
+                    memberCustomersCheck = new MemberCustomers();
+                    UserDao userDao = new UserDaoImpl(connection);
+                    memberCustomersCheck = userDao.get(login.getText(), password.getText());
 
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-
-                    if(memberCustomersCheck == null) {
-                        login.setText("");
-                        password.setText("");
-                        panelPrincipal.add(new JLabel("Erreur d'identifiant et/ou de mot de passe, veuillez réessayer"));
-                        panelPrincipal.setVisible(false);
-                        panelPrincipal.setVisible(true);
-                    }
-
-                    else{
-                        panelPrincipal.setVisible(false);
-                        contentPane.add(panelMainMenu);
-                    }
-
-                }
-            }
-        });
-
-        bookMovie[0].addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == bookMovie[0]) {
-                    panelMovie[0].removeAll();
-                    panelMovie[0].setVisible(false);
-                    panelMovie[0].setVisible(true);
-                    panelMovie[0].add(new JLabel("Réservation"));
-
-                    panelMovie[0].add(new JLabel("Pour combien de personnes ?"));
-                    String[] boxNbrPersonnes = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-                    JComboBox comboBoxNbrPersonnes = new JComboBox<>(boxNbrPersonnes);
-                    panelMovie[0].add(comboBoxNbrPersonnes);
-
-                    panelMovie[0].add(new JLabel("Quel jour ?"));
-                    String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
-                    JComboBox comboBoxJours = new JComboBox<>(boxJours);
-                    panelMovie[0].add(comboBoxJours);
-
-                    panelMovie[0].add(new JLabel("A quelle heure ?"));
-                    String[] boxHeures = new String[]{"8H", "10H", "12H", "14H", "16H", "18h"};
-                    JComboBox comboBoxHeures = new JComboBox<>(boxHeures);
-                    panelMovie[0].add(comboBoxHeures);
-
-                    confirmBookMovie[0] = new JButton("Confirmer Réservation");
-                    panelMovie[0].add(confirmBookMovie[0]);
-
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
                 }
 
+                if(memberCustomersCheck == null) {
+                    login.setText("");
+                    password.setText("");
+                    panelPrincipal.add(new JLabel("Erreur d'identifiant et/ou de mot de passe, veuillez réessayer"));
+                    panelPrincipal.setVisible(false);
+                    panelPrincipal.setVisible(true);
+                }
+
+                else{
+                    panelPrincipal.setVisible(false);
+                    contentPane.add(panelMainMenu);
+                }
 
             }
         });
 
-        bookMovie[1].addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == bookMovie[1]) {
-                    panelMovie[1].removeAll();
-                    panelMovie[1].setVisible(false);
-                    panelMovie[1].setVisible(true);
-                    panelMovie[1].add(new JLabel("Réservation"));
+        bookMovie[0].addActionListener(e -> {
+            if (e.getSource() == bookMovie[0]) {
+                panelMovie[0].removeAll();
+                panelMovie[0].setVisible(false);
+                panelMovie[0].setVisible(true);
+                panelMovie[0].add(new JLabel("Réservation"));
 
-                    panelMovie[1].add(new JLabel("Pour combien de personnes ?"));
-                    String[] boxNbrPersonnes = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-                    JComboBox comboBoxNbrPersonnes = new JComboBox<>(boxNbrPersonnes);
-                    panelMovie[1].add(comboBoxNbrPersonnes);
+                panelMovie[0].add(new JLabel("Pour combien de personnes ?"));
+                String[] boxNbrPersonnes = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+                JComboBox comboBoxNbrPersonnes = new JComboBox<>(boxNbrPersonnes);
+                panelMovie[0].add(comboBoxNbrPersonnes);
 
-                    panelMovie[1].add(new JLabel("Quel jour ?"));
-                    String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
-                    JComboBox comboBoxJours = new JComboBox<>(boxJours);
-                    panelMovie[1].add(comboBoxJours);
+                panelMovie[0].add(new JLabel("Quel jour ?"));
+                String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
+                JComboBox comboBoxJours = new JComboBox<>(boxJours);
+                panelMovie[0].add(comboBoxJours);
 
-                    panelMovie[1].add(new JLabel("A quelle heure ?"));
-                    String[] boxHeures = new String[]{"8H", "10H", "12H", "14H", "16H", "18h"};
-                    JComboBox comboBoxHeures = new JComboBox<>(boxHeures);
-                    panelMovie[1].add(comboBoxHeures);
+                panelMovie[0].add(new JLabel("A quelle heure ?"));
+                String[] boxHeures = new String[]{"8H", "10H", "12H", "14H", "16H", "18h"};
+                JComboBox comboBoxHeures = new JComboBox<>(boxHeures);
+                panelMovie[0].add(comboBoxHeures);
 
-                    confirmBookMovie[1] = new JButton("Confirmer Réservation");
-                    panelMovie[1].add(confirmBookMovie[1]);
-
-                }
-
+                confirmBookMovie[0] = new JButton("Confirmer Réservation");
+                panelMovie[0].add(confirmBookMovie[0]);
 
             }
+
+
         });
 
-        bookMovie[2].addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == bookMovie[2]) {
-                    panelMovie[2].removeAll();
-                    panelMovie[2].setVisible(false);
-                    panelMovie[2].setVisible(true);
-                    panelMovie[2].add(new JLabel("Réservation"));
+        bookMovie[1].addActionListener(e -> {
+            if (e.getSource() == bookMovie[1]) {
+                panelMovie[1].removeAll();
+                panelMovie[1].setVisible(false);
+                panelMovie[1].setVisible(true);
+                panelMovie[1].add(new JLabel("Réservation"));
 
-                    panelMovie[2].add(new JLabel("Pour combien de personnes ?"));
-                    String[] boxNbrPersonnes = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-                    JComboBox comboBoxNbrPersonnes = new JComboBox<>(boxNbrPersonnes);
-                    panelMovie[2].add(comboBoxNbrPersonnes);
+                panelMovie[1].add(new JLabel("Pour combien de personnes ?"));
+                String[] boxNbrPersonnes = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+                JComboBox comboBoxNbrPersonnes = new JComboBox<>(boxNbrPersonnes);
+                panelMovie[1].add(comboBoxNbrPersonnes);
 
-                    panelMovie[2].add(new JLabel("Quel jour ?"));
-                    String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
-                    JComboBox comboBoxJours = new JComboBox<>(boxJours);
-                    panelMovie[2].add(comboBoxJours);
+                panelMovie[1].add(new JLabel("Quel jour ?"));
+                String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
+                JComboBox comboBoxJours = new JComboBox<>(boxJours);
+                panelMovie[1].add(comboBoxJours);
 
-                    panelMovie[2].add(new JLabel("A quelle heure ?"));
-                    String[] boxHeures = new String[]{"8H", "10H", "12H", "14H", "16H", "18h"};
-                    JComboBox comboBoxHeures = new JComboBox<>(boxHeures);
-                    panelMovie[2].add(comboBoxHeures);
+                panelMovie[1].add(new JLabel("A quelle heure ?"));
+                String[] boxHeures = new String[]{"8H", "10H", "12H", "14H", "16H", "18h"};
+                JComboBox comboBoxHeures = new JComboBox<>(boxHeures);
+                panelMovie[1].add(comboBoxHeures);
 
-                    confirmBookMovie[2] = new JButton("Confirmer Réservation");
-                    panelMovie[2].add(confirmBookMovie[2]);
-
-                }
-
+                confirmBookMovie[1] = new JButton("Confirmer Réservation");
+                panelMovie[1].add(confirmBookMovie[1]);
 
             }
+
+
+        });
+
+        bookMovie[2].addActionListener(e -> {
+            if (e.getSource() == bookMovie[2]) {
+                panelMovie[2].removeAll();
+                panelMovie[2].setVisible(false);
+                panelMovie[2].setVisible(true);
+                panelMovie[2].add(new JLabel("Réservation"));
+
+                panelMovie[2].add(new JLabel("Pour combien de personnes ?"));
+                String[] boxNbrPersonnes = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+                JComboBox comboBoxNbrPersonnes = new JComboBox<>(boxNbrPersonnes);
+                panelMovie[2].add(comboBoxNbrPersonnes);
+
+                panelMovie[2].add(new JLabel("Quel jour ?"));
+                String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
+                JComboBox comboBoxJours = new JComboBox<>(boxJours);
+                panelMovie[2].add(comboBoxJours);
+
+                panelMovie[2].add(new JLabel("A quelle heure ?"));
+                String[] boxHeures = new String[]{"8H", "10H", "12H", "14H", "16H", "18h"};
+                JComboBox comboBoxHeures = new JComboBox<>(boxHeures);
+                panelMovie[2].add(comboBoxHeures);
+
+                confirmBookMovie[2] = new JButton("Confirmer Réservation");
+                panelMovie[2].add(confirmBookMovie[2]);
+
+            }
+
+
         });
 
 
@@ -365,6 +344,6 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
 
 
     public static void main(String[] args) {
-        ApplicationFrameCustomers applicationFrameCustomers = new ApplicationFrameCustomers();
+        new ApplicationFrameCustomers();
     }
 }
