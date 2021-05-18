@@ -10,19 +10,19 @@ import javax.swing.*;
 public class ApplicationFrameCustomers extends JFrame implements ActionListener {
 
     //Déclaration des variables
-    JButton submit, submitCreationCompte, newAccount, freeConnection;
-    JButton bookMovie[] = new JButton[3];
-    JLabel inscription, labelNewLogin, labelNewPassword;
-    MemberCustomers MC, memberCustomersCheck;
-    Movie movie1, movie2, movie3;
-    MovieDao movieDao;
-    JTextField login, newLogin;
-    JPasswordField password, newPassword;
-    Container contentPane;
-    JPanel panelPrincipal, panelMember, panelCreationCompte, panelMenuInscription, panelLabelInscription,
+    private JButton submit, submitCreationCompte, newAccount, freeConnection;
+    private JButton bookMovie[] = new JButton[3];
+    private JLabel inscription, labelNewLogin, labelNewPassword;
+    private MemberCustomers MC, memberCustomersCheck;
+    private Movie movie1, movie2, movie3;
+    private MovieDao movieDao;
+    private JTextField login, newLogin;
+    private JPasswordField password, newPassword;
+    private Container contentPane;
+    private JPanel panelPrincipal, panelMember, panelCreationCompte, panelMenuInscription, panelLabelInscription,
             panelGuest, panelMainMenu, panelButtonCreateAccount;
-    JPanel panelMovie[] = new JPanel[3];
-    JComboBox boxCategorieAge;
+    private JPanel panelMovie[] = new JPanel[3];
+    private JComboBox boxCategorieAge;
 
 
     public ApplicationFrameCustomers() {
@@ -254,6 +254,17 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         bookMovie[0].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == bookMovie[0]) {
+                    panelMovie[0].removeAll();
+                    panelMovie[0].setVisible(false);
+                    panelMovie[0].setVisible(true);
+                    panelMovie[0].add(new JLabel("Réservation"));
+                    panelMovie[0].add(new JLabel("Quelle jour voulez-vous réserver ?"));
+                    String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
+                    JComboBox comboBoxJours = new JComboBox<>(boxJours);
+                    panelMovie[0].add(comboBoxJours);
+                }
+
 
             }
         });
