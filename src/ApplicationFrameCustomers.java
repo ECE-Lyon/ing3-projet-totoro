@@ -11,8 +11,8 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
 
     //Déclaration des variables
     private final JButton submit, submitCreationCompte, newAccount, freeConnection;
-    private final JButton bookMovie[] = new JButton[3];
-    final JButton confirmBookMovie[] = new JButton[3];
+    private final JButton[] bookMovie = new JButton[3];
+    final JButton[] confirmBookMovie = new JButton[3];
     final JLabel inscription, labelNewLogin, labelNewPassword;
     private MemberCustomers MC, memberCustomersCheck;
     Movie movie1, movie2, movie3;
@@ -22,7 +22,7 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
     private final Container contentPane;
     final JPanel panelPrincipal, panelMember, panelCreationCompte, panelMenuInscription, panelLabelInscription,
             panelGuest, panelMainMenu, panelButtonCreateAccount;
-    private final JPanel panelMovie[] = new JPanel[3];
+    private final JPanel[] panelMovie = new JPanel[3];
     private final JComboBox boxCategorieAge;
 
 
