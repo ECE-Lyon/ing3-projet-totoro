@@ -207,6 +207,8 @@ public class ApplicationFrameCustomers extends JFrame{
                     throwables.printStackTrace();
                 }
                 panelCreationCompte.setVisible(false);
+                panelLabelInscription.setVisible(false);
+                panelMenuInscription.setVisible(false);
                 panelPrincipal.add(new JLabel("Votre compte a bien été créé, vous pouvez vous connecter"));
                 panelPrincipal.setVisible(true);
             }
