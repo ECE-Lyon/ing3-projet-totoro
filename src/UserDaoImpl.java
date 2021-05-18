@@ -12,9 +12,10 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public void add(MemberCustomers memberCustomers) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO utilisateur(login, mdp) VALUES (?,?)")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO utilisateur(login, mdp, categorieAge) VALUES (?,?,?)")) {
             preparedStatement.setString(1, memberCustomers.getLogin());
             preparedStatement.setString(2, memberCustomers.getPassword());
+            preparedStatement.setString(3, memberCustomers.getCategorieAge());
             preparedStatement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

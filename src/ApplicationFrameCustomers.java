@@ -22,6 +22,7 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
     JPanel panelPrincipal, panelMember, panelCreationCompte, panelMenuInscription, panelLabelInscription,
             panelGuest, panelMainMenu, panelButtonCreateAccount;
     JPanel panelMovie[] = new JPanel[3];
+    JComboBox boxCategorieAge;
 
 
     public ApplicationFrameCustomers() {
@@ -116,6 +117,11 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         newPassword = new JPasswordField(passwordARemplir[0]);
         panelCreationCompte.add(newPassword);
 
+        panelCreationCompte.add(new JLabel("Catégorie d'âge :"));
+        String[] boxItems = new String[]{"NORMAL", "ENFANT(jusqu'à 12 ans)", "SENIOR(à partir de 65 ans"};
+        boxCategorieAge = new JComboBox<>(boxItems);
+        panelCreationCompte.add(boxCategorieAge);
+
         panelCreationCompte.add(new JLabel(""));
         submitCreationCompte = new JButton("Création du compte");
         panelCreationCompte.add(submitCreationCompte);
@@ -199,6 +205,8 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
                     MC = new MemberCustomers();
                     MC.setLogin(newLogin.getText());
                     MC.setPassword(newPassword.getText());
+                    int itemIndex = boxCategorieAge.getSelectedIndex();
+                    MC.setCategorieAge(boxItems[itemIndex]);
                     try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
                         UserDao userDao = new UserDaoImpl(connection);
                         userDao.add(MC);
@@ -240,6 +248,13 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
                     }
 
                 }
+            }
+        });
+
+        bookMovie[0].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
 
