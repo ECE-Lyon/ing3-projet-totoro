@@ -22,6 +22,7 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
     JPanel panelPrincipal, panelMember, panelCreationCompte, panelMenuInscription, panelLabelInscription,
             panelGuest, panelMainMenu, panelButtonCreateAccount;
     JPanel panelMovie[] = new JPanel[3];
+    JComboBox<String> boxCategorieAge;
 
 
     public ApplicationFrameCustomers() {
@@ -102,7 +103,7 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
 
         //Création d'un sous-panel pou le formulaire d'inscription
         panelCreationCompte = new JPanel();
-        panelCreationCompte.setLayout(new GridLayout(4,2));
+        panelCreationCompte.setLayout(new GridLayout(5,2));
 
         labelNewLogin = new JLabel("Identifiant : ");
         panelCreationCompte.add(labelNewLogin);
@@ -115,6 +116,11 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
         final String[] passwordARemplir = {"mot de passe"};
         newPassword = new JPasswordField(passwordARemplir[0]);
         panelCreationCompte.add(newPassword);
+
+        panelCreationCompte.add(new JLabel("Catégorie d'âge : "));
+        String[] boxItems = new String[]{"NORMAL", "ENFANT (jusqu'à 12 ans)", "SENIOR (à partir de 65 ans)"};
+        boxCategorieAge = new JComboBox<>(boxItems);
+        panelCreationCompte.add(boxCategorieAge);
 
         panelCreationCompte.add(new JLabel(""));
         submitCreationCompte = new JButton("Création du compte");
