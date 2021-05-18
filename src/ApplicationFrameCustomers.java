@@ -24,8 +24,6 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
             panelGuest, panelMainMenu, panelButtonCreateAccount;
     private final JPanel panelMovie[] = new JPanel[3];
     private final JComboBox boxCategorieAge;
-    String[] boxNbrPersonnes = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-    JComboBox comboBoxNbrPersonnes = new JComboBox<>(boxNbrPersonnes);
 
 
     public ApplicationFrameCustomers() {
