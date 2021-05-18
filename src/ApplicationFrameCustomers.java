@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import javax.swing.*;
 
 
-public class ApplicationFrameCustomers extends JFrame implements ActionListener {
+public class ApplicationFrameCustomers extends JFrame{
 
     //Déclaration des variables
     private final JButton submit, submitCreationCompte, newAccount, freeConnection;
@@ -348,10 +348,7 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
 
 
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
 
-    }
 
 
 
