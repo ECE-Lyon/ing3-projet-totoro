@@ -12,6 +12,7 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
     //Déclaration des variables
     private JButton submit, submitCreationCompte, newAccount, freeConnection;
     private JButton bookMovie[] = new JButton[3];
+    private JButton confirmBookMovie[] = new JButton[3];
     private JLabel inscription, labelNewLogin, labelNewPassword;
     private MemberCustomers MC, memberCustomersCheck;
     private Movie movie1, movie2, movie3;
@@ -259,10 +260,91 @@ public class ApplicationFrameCustomers extends JFrame implements ActionListener 
                     panelMovie[0].setVisible(false);
                     panelMovie[0].setVisible(true);
                     panelMovie[0].add(new JLabel("Réservation"));
-                    panelMovie[0].add(new JLabel("Quelle jour voulez-vous réserver ?"));
+
+                    panelMovie[0].add(new JLabel("Pour combien de personnes ?"));
+                    String[] boxNbrPersonnes = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+                    JComboBox comboBoxNbrPersonnes = new JComboBox<>(boxNbrPersonnes);
+                    panelMovie[0].add(comboBoxNbrPersonnes);
+
+                    panelMovie[0].add(new JLabel("Quel jour ?"));
                     String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
                     JComboBox comboBoxJours = new JComboBox<>(boxJours);
                     panelMovie[0].add(comboBoxJours);
+
+                    panelMovie[0].add(new JLabel("A quelle heure ?"));
+                    String[] boxHeures = new String[]{"8H", "10H", "12H", "14H", "16H", "18h"};
+                    JComboBox comboBoxHeures = new JComboBox<>(boxHeures);
+                    panelMovie[0].add(comboBoxHeures);
+
+                    confirmBookMovie[0] = new JButton("Confirmer Réservation");
+                    panelMovie[0].add(confirmBookMovie[0]);
+
+                }
+
+
+            }
+        });
+
+        bookMovie[1].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == bookMovie[1]) {
+                    panelMovie[1].removeAll();
+                    panelMovie[1].setVisible(false);
+                    panelMovie[1].setVisible(true);
+                    panelMovie[1].add(new JLabel("Réservation"));
+
+                    panelMovie[1].add(new JLabel("Pour combien de personnes ?"));
+                    String[] boxNbrPersonnes = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+                    JComboBox comboBoxNbrPersonnes = new JComboBox<>(boxNbrPersonnes);
+                    panelMovie[1].add(comboBoxNbrPersonnes);
+
+                    panelMovie[1].add(new JLabel("Quel jour ?"));
+                    String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
+                    JComboBox comboBoxJours = new JComboBox<>(boxJours);
+                    panelMovie[1].add(comboBoxJours);
+
+                    panelMovie[1].add(new JLabel("A quelle heure ?"));
+                    String[] boxHeures = new String[]{"8H", "10H", "12H", "14H", "16H", "18h"};
+                    JComboBox comboBoxHeures = new JComboBox<>(boxHeures);
+                    panelMovie[1].add(comboBoxHeures);
+
+                    confirmBookMovie[1] = new JButton("Confirmer Réservation");
+                    panelMovie[1].add(confirmBookMovie[1]);
+
+                }
+
+
+            }
+        });
+
+        bookMovie[2].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == bookMovie[2]) {
+                    panelMovie[2].removeAll();
+                    panelMovie[2].setVisible(false);
+                    panelMovie[2].setVisible(true);
+                    panelMovie[2].add(new JLabel("Réservation"));
+
+                    panelMovie[2].add(new JLabel("Pour combien de personnes ?"));
+                    String[] boxNbrPersonnes = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+                    JComboBox comboBoxNbrPersonnes = new JComboBox<>(boxNbrPersonnes);
+                    panelMovie[2].add(comboBoxNbrPersonnes);
+
+                    panelMovie[2].add(new JLabel("Quel jour ?"));
+                    String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
+                    JComboBox comboBoxJours = new JComboBox<>(boxJours);
+                    panelMovie[2].add(comboBoxJours);
+
+                    panelMovie[2].add(new JLabel("A quelle heure ?"));
+                    String[] boxHeures = new String[]{"8H", "10H", "12H", "14H", "16H", "18h"};
+                    JComboBox comboBoxHeures = new JComboBox<>(boxHeures);
+                    panelMovie[2].add(comboBoxHeures);
+
+                    confirmBookMovie[2] = new JButton("Confirmer Réservation");
+                    panelMovie[2].add(confirmBookMovie[2]);
+
                 }
 
 
