@@ -1,6 +1,6 @@
 public class MemberCustomers extends Customers{
     public enum enumCategorieAge {REGULAR, SENIOR, CHILDREN}
-    private enumCategorieAge categorieAge;
+    private String categorieAge;
     private String login;
     private String password;
 
@@ -12,7 +12,7 @@ public class MemberCustomers extends Customers{
         this.password = password;
     }
 
-    public MemberCustomers(String login, String password, enumCategorieAge categorieAge) {
+    public MemberCustomers(String login, String password, String categorieAge) {
         this.login = login;
         this.password = password;
         this.categorieAge = categorieAge;
@@ -32,5 +32,13 @@ public class MemberCustomers extends Customers{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCategorieAge() {
+        return categorieAge;
+    }
+
+    public void setCategorieAge(String categorieAge) {
+        this.categorieAge = categorieAge;
     }
 }
