@@ -248,7 +248,7 @@ public class ApplicationFrameCustomers extends JFrame{
                 panelMovie[0].setVisible(false);
                 panelMovie[0].setVisible(true);
                 if(memberCustomersCheck == null) {
-                    panelMovie[0].add(new JLabel("PLEIN TARIF"));
+                    panelMovie[0].add(new JLabel("Tarif : PLEIN TARIF"));
                 }
                 else{
                     panelMovie[0].add(new JLabel("Tarif " + memberCustomersCheck.getCategorieAge()));
@@ -270,6 +270,8 @@ public class ApplicationFrameCustomers extends JFrame{
                 confirmBookMovie[0].addActionListener(e1 -> {
                     if (e1.getSource() == confirmBookMovie[0]) {
                         panelMovie[0].add(new JLabel("Votre ticket est réservé."));
+                        panelMovie[0].add(new JLabel("Le " + boxJours[comboBoxJours.getSelectedIndex()]));
+                        panelMovie[0].add(new JLabel("à " + boxHeures[comboBoxHeures.getSelectedIndex()]));
                         panelMovie[0].add(new JLabel("À bientôt dans nos cinémas !"));
                         panelMovie[0].setVisible(false);
                         panelMovie[0].setVisible(true);
