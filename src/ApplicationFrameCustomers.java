@@ -211,7 +211,6 @@ public class ApplicationFrameCustomers extends JFrame{
                 panelPrincipal.add(new JLabel("   Votre compte a bien été créé, vous pouvez vous connecter   "));
                 panelLabelInscription.setVisible(false);
                 panelMenuInscription.setVisible(false);
-                panelPrincipal.add(new JLabel("Votre compte a bien été créé, vous pouvez vous connecter"));
                 panelPrincipal.setVisible(true);
             }
         });
