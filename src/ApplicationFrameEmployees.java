@@ -182,7 +182,7 @@ public class ApplicationFrameEmployees extends JFrame{
         });
 
 
-        setSize(600, 400);
+        setSize(600, 420);
         setVisible(true);
     }
 
