@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,7 +8,6 @@ import java.sql.SQLException;
 public class ApplicationFrameEmployees extends JFrame{
 
     //Déclaration des variables
-    Employees E;
     Movie movie;
     JButton addMovie, removeMovie, confirmAddMovie, confirmRemoveMovie;
     JTextField titleNewMovie, genreNewMovie, idNewMovie, dateNewMovie, timeNewMovie, urlNewMovie, idMovieRemove;
@@ -59,13 +56,6 @@ public class ApplicationFrameEmployees extends JFrame{
         panelAddMovie = new JPanel();
         panelAddMovie.setLayout(new GridLayout(2,1));
 
-        //Création d'un sous-panel pour le label "Ajouter un film à l'affiche"
-        panelLabelAjout = new JPanel();
-        labelAjout = new JLabel("Ajouter un film à l'affiche");
-        labelAjout.setFont(new Font("Calibri", Font.BOLD, 40));
-        panelLabelAjout.add(labelAjout);
-        panelAddMovie.add(panelLabelAjout);
-
         //Création d'un sous-panel regroupant les informations du film à remplir
         panelInfoMovie = new JPanel();
         panelInfoMovie.setLayout(new GridLayout(7,2));
@@ -112,72 +102,61 @@ public class ApplicationFrameEmployees extends JFrame{
 
 
         //ActionListener : ouvre le panel pour ajouter un film
-        addMovie.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == addMovie){
-                    panelMenu.setVisible(false);
-                    panelWelcome.setVisible(false);
-                    panelPrincipal.add(panelAddMovie);
-                }
+        addMovie.addActionListener(e -> {
+            if (e.getSource() == addMovie){
+                panelMenu.setVisible(false);
+                panelPrincipal.add(panelAddMovie);
+                panelAddMovie.setVisible(true);
             }
         });
 
         //ActionListener : ouvre le panel pour enlever un film
-        removeMovie.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == removeMovie) {
-                    panelMenu.setVisible(false);
-                    contentPane.add(panelRemoveMovie);
-                }
+        removeMovie.addActionListener(e -> {
+            if (e.getSource() == removeMovie) {
+                panelMenu.setVisible(false);
+                panelPrincipal.add(panelRemoveMovie);
+                panelRemoveMovie.setVisible(true);
             }
         });
 
 
         //ActionListener pour ajouter un film à la base de données
-        confirmAddMovie.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == confirmAddMovie){
-                    movie = new Movie();
-                    int intIdNewMovie = Integer.parseInt(idNewMovie.getText());
-                    int intTimeNewMovie = Integer.parseInt(timeNewMovie.getText());
-                    movie.setId(intIdNewMovie);
-                    movie.setTitle(titleNewMovie.getText());
-                    movie.setDate(dateNewMovie.getText());
-                    movie.setTime(intTimeNewMovie);
-                    movie.setUrl(urlNewMovie.getText());
-                    movie.setGenre(genreNewMovie.getText());
-                    try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
-                        MovieDao movieDao = new MovieDaoImpl(connection);
-                        movieDao.add(movie);
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-                    contentPane.remove(panelAddMovie);
-                    panelMenu.setVisible(true);
-                    panelWelcome.setVisible(true);
+        confirmAddMovie.addActionListener(e -> {
+            if (e.getSource() == confirmAddMovie){
+                movie = new Movie();
+                int intIdNewMovie = Integer.parseInt(idNewMovie.getText());
+                int intTimeNewMovie = Integer.parseInt(timeNewMovie.getText());
+                movie.setId(intIdNewMovie);
+                movie.setTitle(titleNewMovie.getText());
+                movie.setDate(dateNewMovie.getText());
+                movie.setTime(intTimeNewMovie);
+                movie.setUrl(urlNewMovie.getText());
+                movie.setGenre(genreNewMovie.getText());
+                try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
+                    MovieDao movieDao = new MovieDaoImpl(connection);
+                    movieDao.add(movie);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
                 }
+                panelAddMovie.setVisible(false);
+                panelMenu.setVisible(true);
+                panelWelcome.setVisible(true);
             }
         });
 
         //ActionListener : supprime le film sélectionné de la base de données et ferme le panel
-        confirmRemoveMovie.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == confirmRemoveMovie) {
-                    try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
-                        MovieDao movieDao = new MovieDaoImpl(connection);
-                        int intIdRemoveMovie = Integer.parseInt(idMovieRemove.getText());
-                        movieDao.delete(intIdRemoveMovie);
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-                    contentPane.remove(panelRemoveMovie);
-                    panelMenu.setVisible(true);
-                    panelWelcome.setVisible(true);
+        confirmRemoveMovie.addActionListener(e -> {
+            if (e.getSource() == confirmRemoveMovie) {
+                try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
+                    MovieDao movieDao = new MovieDaoImpl(connection);
+                    int intIdRemoveMovie = Integer.parseInt(idMovieRemove.getText());
+                    movieDao.delete(intIdRemoveMovie);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
                 }
+                panelRemoveMovie.setVisible(false);
+                panelMenu.setVisible(true);
+                panelWelcome.setVisible(true);
             }
         });
 
