@@ -72,11 +72,11 @@ public class ApplicationFrameCustomers extends JFrame{
         panelMember.add(new JLabel(""));
 
         panelMember.add(new JLabel("Identifiant : "));
-        login = new JTextField();
+        login = new JTextField(5);
         panelMember.add(login);
 
         panelMember.add(new JLabel("Mot de passe : "));
-        password = new JPasswordField();
+        password = new JPasswordField(5);
         panelMember.add(password);
 
         panelMember.add(new JLabel(""));

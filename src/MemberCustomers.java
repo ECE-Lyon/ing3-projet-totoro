@@ -1,4 +1,4 @@
-public class MemberCustomers extends Customers{
+public class MemberCustomers {
     public enum enumCategorieAge {REGULAR, SENIOR, CHILDREN}
     private String categorieAge;
     private String login;
