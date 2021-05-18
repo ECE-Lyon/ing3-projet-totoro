@@ -34,6 +34,7 @@ public class UserDaoImpl implements UserDao{
 
                     memberCustomers.setLogin(resultSet.getString("login"));
                     memberCustomers.setPassword(resultSet.getString("mdp"));
+                    memberCustomers.setCategorieAge(resultSet.getString("categorieAge"));
                     return memberCustomers;
                 }
             }
