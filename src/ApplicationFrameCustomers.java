@@ -270,13 +270,10 @@ public class ApplicationFrameCustomers extends JFrame{
                 confirmBookMovie[0].addActionListener(e1 -> {
                     if (e1.getSource() == confirmBookMovie[0]) {
                         panelMovie[0].add(new JLabel("Votre ticket est réservé."));
-                        panelMovie[0].add(new JLabel("A bientôt dans nos cinéma !"));
+                        panelMovie[0].add(new JLabel("A bientôt dans nos cinémas !"));
                         panelMovie[0].setVisible(false);
                         panelMovie[0].setVisible(true);
-
                     }
-
-
                 });
             }
         });
@@ -307,9 +304,17 @@ public class ApplicationFrameCustomers extends JFrame{
                 confirmBookMovie[1] = new JButton("Confirmer Réservation");
                 panelMovie[1].add(confirmBookMovie[1]);
 
+                confirmBookMovie[1].addActionListener(e1 -> {
+                    if (e1.getSource() == confirmBookMovie[1]) {
+                        panelMovie[1].add(new JLabel("Votre ticket est réservé."));
+                        panelMovie[1].add(new JLabel("A bientôt dans nos cinémas !"));
+                        panelMovie[1].setVisible(false);
+                        panelMovie[1].setVisible(true);
+
+                    }
+                });
+
             }
-
-
         });
 
         bookMovie[2].addActionListener(e -> {
@@ -337,6 +342,15 @@ public class ApplicationFrameCustomers extends JFrame{
 
                 confirmBookMovie[2] = new JButton("Confirmer Réservation");
                 panelMovie[2].add(confirmBookMovie[2]);
+
+                confirmBookMovie[2].addActionListener(e1 -> {
+                    if (e1.getSource() == confirmBookMovie[2]) {
+                        panelMovie[2].add(new JLabel("Votre ticket est réservé."));
+                        panelMovie[2].add(new JLabel("A bientôt dans nos cinémas !"));
+                        panelMovie[2].setVisible(false);
+                        panelMovie[2].setVisible(true);
+                    }
+                });
             }
         });
 
