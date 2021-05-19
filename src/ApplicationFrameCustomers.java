@@ -1,9 +1,7 @@
 import java.awt.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import javax.swing.*;
 
 
@@ -11,35 +9,62 @@ public class ApplicationFrameCustomers extends JFrame{
 
     //Déclaration des variables
     private final JButton submit, submitCreationCompte, newAccount, freeConnection;
-    private final JButton[] bookMovie = new JButton[3];
-    final JButton[] confirmBookMovie = new JButton[3];
+    JButton[] bookMovie;
+    JButton[] confirmBookMovie;
     final JLabel inscription, labelNewLogin, labelNewPassword;
     private MemberCustomers MC, memberCustomersCheck;
-    Movie movie1, movie2, movie3;
     MovieDao movieDao;
     private final JTextField login, newLogin;
     private final JPasswordField password, newPassword;
     private final Container contentPane;
     final JPanel panelPrincipal, panelMember, panelCreationCompte, panelMenuInscription, panelLabelInscription,
-            panelGuest, panelMainMenu, panelButtonCreateAccount;
-    private final JPanel[] panelMovie = new JPanel[3];
+            panelGuest, panelBooking, panelButtonCreateAccount;
+    JPanel[] panelMovie;
     private final JComboBox boxCategorieAge;
+
+    Movie[] movie;
 
 
     public ApplicationFrameCustomers() {
 
-        //Connexion avec la base de données des films
-        movie1 = new Movie();
-        movie2 = new Movie();
-        movie3 = new Movie();
+        /*Connexion à la bdd pour récupérer le nombre de film
+        Puis initialisation du nombre d'objet de façon dynamique
+        afin de pouvoir afficher le nombre de films que l'on veut
+        */
+        int nombreFilm = 0;
         try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
+            try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM film")) {
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        nombreFilm++;
+
+                    }
+                }
+            }
+            movie = new Movie[nombreFilm];
+            panelMovie = new JPanel[nombreFilm];
+            bookMovie = new  JButton[nombreFilm];
+            confirmBookMovie = new  JButton[nombreFilm];
+            //Maintenant on connait le nombre de films
+            //Ici on va mettre les films qui sont dans la base de données dans des objets Movie
             movieDao = new MovieDaoImpl(connection);
-            movie1 = movieDao.get(1);
-            movie2 = movieDao.get(2);
-            movie3 = movieDao.get(3);
+            try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM film")) {
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    Integer i = 0;
+                    while (resultSet.next()) {
+                        movie[i] = new Movie();
+                        movie[i] = movieDao.get(resultSet.getInt("id"));
+                        i++;
+
+                    }
+                }
+            }
+
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
 
 
 
@@ -132,46 +157,24 @@ public class ApplicationFrameCustomers extends JFrame{
 
 
         //Création du menu principal après connexion
-        panelMainMenu = new JPanel();
-        panelMainMenu.setLayout(new GridLayout(1,3));
+        panelBooking = new JPanel();
+        panelBooking.setLayout(new GridLayout(1,3));
 
-        //Sous-panel pour le film 1
-        panelMovie[0] = new JPanel();
-        ImageIcon imageIcon1 = new ImageIcon(movie1.getUrl());
-        JLabel jLabel = new JLabel(imageIcon1);
-        panelMovie[0].add(jLabel);
-        panelMovie[0].add(new JLabel(movie1.getTitle()));
-        panelMovie[0].add(new JLabel(movie1.getGenre()));
-        panelMovie[0].add(new JLabel(movie1.getDate()));
-        panelMovie[0].add(new JLabel(movie1.getTime() + " minutes"));
-        bookMovie[0] = new JButton("Voir ce film");
-        panelMovie[0].add(bookMovie[0]);
-
-        //Sous-panel pour le film 2
-        panelMovie[1] = new JPanel();
-        ImageIcon imageIcon2 = new ImageIcon(movie2.getUrl());
-        panelMovie[1].add(new JLabel(imageIcon2));
-        panelMovie[1].add(new JLabel(movie2.getTitle()));
-        panelMovie[1].add(new JLabel(movie2.getGenre()));
-        panelMovie[1].add(new JLabel(movie2.getDate()));
-        panelMovie[1].add(new JLabel(movie2.getTime() + " minutes"));
-        bookMovie[1] = new JButton("Voir ce film");
-        panelMovie[1].add(bookMovie[1]);
-
-        //Sous-panel pour le film 3
-        panelMovie[2] = new JPanel();
-        ImageIcon imageIcon3 = new ImageIcon(movie3.getUrl());
-        panelMovie[2].add(new JLabel(imageIcon3));
-        panelMovie[2].add(new JLabel(movie3.getTitle()));
-        panelMovie[2].add(new JLabel(movie3.getGenre()));
-        panelMovie[2].add(new JLabel(movie3.getDate()));
-        panelMovie[2].add(new JLabel(movie3.getTime() + " minutes"));
-        bookMovie[2] = new JButton("Voir ce film");
-        panelMovie[2].add(bookMovie[2]);
-
-        panelMainMenu.add(panelMovie[0]);
-        panelMainMenu.add(panelMovie[1]);
-        panelMainMenu.add(panelMovie[2]);
+        /*Création des panels pour afficher les films et ajout au menu réservation
+        en fonction du nombre de films qu'il y a dans la bdd
+        */
+        for(int i = 0; i < nombreFilm; i++) {
+            panelMovie[i] = new JPanel();
+            ImageIcon imageIcon = new ImageIcon(movie[i].getUrl());
+            panelMovie[i].add(new JLabel(imageIcon));
+            panelMovie[i].add(new JLabel(movie[i].getTitle()));
+            panelMovie[i].add(new JLabel(movie[i].getGenre()));
+            panelMovie[i].add(new JLabel(movie[i].getDate()));
+            panelMovie[i].add(new JLabel(movie[i].getTime() + " minutes"));
+            bookMovie[i] = new JButton("Voir ce film");
+            panelMovie[i].add(bookMovie[i]);
+            panelBooking.add(panelMovie[i]);
+        }
 
 
 
@@ -179,8 +182,8 @@ public class ApplicationFrameCustomers extends JFrame{
         freeConnection.addActionListener(e -> {
             if (e.getSource() == freeConnection){
                 panelPrincipal.setVisible(false);
-                contentPane.add(panelMainMenu);
-                panelMainMenu.setVisible(true);
+                contentPane.add(panelBooking);
+                panelBooking.setVisible(true);
             }
         });
 
@@ -189,6 +192,7 @@ public class ApplicationFrameCustomers extends JFrame{
             if(e.getSource() == newAccount) {
                 panelPrincipal.setVisible(false);
                 contentPane.add(panelMenuInscription);
+                panelButtonCreateAccount.remove(newAccount);
             }
         });
 
@@ -232,7 +236,7 @@ public class ApplicationFrameCustomers extends JFrame{
 
                     else{
                         panelPrincipal.setVisible(false);
-                        contentPane.add(panelMainMenu);
+                        contentPane.add(panelBooking);
                     }
 
                 } catch (SQLException throwables) {
@@ -241,128 +245,51 @@ public class ApplicationFrameCustomers extends JFrame{
             }
         });
 
-        //ActionListener pour réserver une séance pour le film 1
-        bookMovie[0].addActionListener(e -> {
-            if (e.getSource() == bookMovie[0]) {
-                panelMovie[0].removeAll();
-                panelMovie[0].setVisible(false);
-                panelMovie[0].setVisible(true);
-                if(memberCustomersCheck == null) {
-                    panelMovie[0].add(new JLabel("Tarif : PLEIN TARIF"));
-                }
-                else{
-                    panelMovie[0].add(new JLabel("Tarif " + memberCustomersCheck.getCategorieAge()));
-                }
-
-                panelMovie[0].add(new JLabel("Quel jour ?"));
-                String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
-                JComboBox comboBoxJours = new JComboBox<>(boxJours);
-                panelMovie[0].add(comboBoxJours);
-
-                panelMovie[0].add(new JLabel("À quelle heure ?"));
-                String[] boxHeures = new String[]{"10h", "12h", "14h", "16h", "18h", "20h"};
-                JComboBox comboBoxHeures = new JComboBox<>(boxHeures);
-                panelMovie[0].add(comboBoxHeures);
-
-                confirmBookMovie[0] = new JButton("Confirmer réservation");
-                panelMovie[0].add(confirmBookMovie[0]);
-
-                confirmBookMovie[0].addActionListener(e1 -> {
-                    if (e1.getSource() == confirmBookMovie[0]) {
-                        panelMovie[0].add(new JLabel("Votre ticket est réservé."));
-                        panelMovie[0].add(new JLabel("Le " + boxJours[comboBoxJours.getSelectedIndex()]));
-                        panelMovie[0].add(new JLabel("à " + boxHeures[comboBoxHeures.getSelectedIndex()]));
-                        panelMovie[0].add(new JLabel("À bientôt dans nos cinémas !"));
-                        panelMovie[0].setVisible(false);
-                        panelMovie[0].setVisible(true);
-
+        /*Action listener pour réserver un film en fonction de la fidélité
+        PLEIN TARIF pour ceux qui n'ont pas de compte par exemple*/
+        for (int i = 0; i < nombreFilm; i++) {
+            int finalI = i;
+            bookMovie[i].addActionListener(e -> {
+                if (e.getSource() == bookMovie[finalI]) {
+                    panelMovie[finalI].removeAll();
+                    panelMovie[finalI].setVisible(false);
+                    panelMovie[finalI].setVisible(true);
+                    if(memberCustomersCheck == null) {
+                        panelMovie[finalI].add(new JLabel("Tarif : PLEIN TARIF"));
                     }
-                });
-            }
-        });
-
-        //ActionListener pour réserver une séance pour le film 2
-        bookMovie[1].addActionListener(e -> {
-            if (e.getSource() == bookMovie[1]) {
-                panelMovie[1].removeAll();
-                panelMovie[1].setVisible(false);
-                panelMovie[1].setVisible(true);
-                if(memberCustomersCheck == null) {
-                    panelMovie[1].add(new JLabel("PLEIN TARIF "));
-                }
-                else{
-                    panelMovie[1].add(new JLabel("Tarif " + memberCustomersCheck.getCategorieAge()));
-                }
-
-                panelMovie[1].add(new JLabel("Quel jour ?"));
-                String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
-                JComboBox comboBoxJours = new JComboBox<>(boxJours);
-                panelMovie[1].add(comboBoxJours);
-
-                panelMovie[1].add(new JLabel("À quelle heure ?"));
-                String[] boxHeures = new String[]{"10h", "12h", "14h", "16h", "18h", "20h"};
-                JComboBox comboBoxHeures = new JComboBox<>(boxHeures);
-                panelMovie[1].add(comboBoxHeures);
-
-                confirmBookMovie[1] = new JButton("Confirmer réservation");
-                panelMovie[1].add(confirmBookMovie[1]);
-
-                confirmBookMovie[1].addActionListener(e1 -> {
-                    if (e1.getSource() == confirmBookMovie[1]) {
-                        panelMovie[1].add(new JLabel("Votre ticket est réservé."));
-                        panelMovie[1].add(new JLabel("Le " + boxJours[comboBoxJours.getSelectedIndex()]));
-                        panelMovie[1].add(new JLabel("à " + boxHeures[comboBoxHeures.getSelectedIndex()]));
-                        panelMovie[1].add(new JLabel("À bientôt dans nos cinémas !"));
-                        panelMovie[1].setVisible(false);
-                        panelMovie[1].setVisible(true);
-
+                    else{
+                        panelMovie[finalI].add(new JLabel("Tarif " + memberCustomersCheck.getCategorieAge()));
                     }
-                });
-            }
 
-        });
+                    panelMovie[finalI].add(new JLabel("Quel jour ?"));
+                    String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
+                    JComboBox comboBoxJours = new JComboBox<>(boxJours);
+                    panelMovie[finalI].add(comboBoxJours);
 
-        //ActionListener pour réserver une séance pour le film 3
-        bookMovie[2].addActionListener(e -> {
-            if (e.getSource() == bookMovie[2]) {
-                panelMovie[2].removeAll();
-                panelMovie[2].setVisible(false);
-                panelMovie[2].setVisible(true);
-                if(memberCustomersCheck == null) {
-                    panelMovie[2].add(new JLabel("PLEIN TARIF "));
+                    panelMovie[finalI].add(new JLabel("À quelle heure ?"));
+                    String[] boxHeures = new String[]{"10h", "12h", "14h", "16h", "18h", "20h"};
+                    JComboBox comboBoxHeures = new JComboBox<>(boxHeures);
+                    panelMovie[finalI].add(comboBoxHeures);
+
+                    confirmBookMovie[finalI] = new JButton("Confirmer réservation");
+                    panelMovie[finalI].add(confirmBookMovie[finalI]);
+
+                    confirmBookMovie[finalI].addActionListener(e1 -> {
+                        if (e1.getSource() == confirmBookMovie[finalI]) {
+                            panelMovie[finalI].add(new JLabel("Votre ticket est réservé."));
+                            panelMovie[finalI].add(new JLabel("Le " + boxJours[comboBoxJours.getSelectedIndex()]));
+                            panelMovie[finalI].add(new JLabel("à " + boxHeures[comboBoxHeures.getSelectedIndex()] + "."));
+                            panelMovie[finalI].add(new JLabel("À bientôt dans nos cinémas !"));
+                            panelMovie[finalI].setVisible(false);
+                            panelMovie[finalI].setVisible(true);
+
+                        }
+                    });
                 }
-                else{
-                    panelMovie[2].add(new JLabel("Tarif " + memberCustomersCheck.getCategorieAge()));
-                }
+            });
+        }
 
-                panelMovie[2].add(new JLabel("Quel jour ?"));
-                String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
-                JComboBox comboBoxJours = new JComboBox<>(boxJours);
-                panelMovie[2].add(comboBoxJours);
-
-                panelMovie[2].add(new JLabel("À quelle heure ?"));
-                String[] boxHeures = new String[]{"10h", "12h", "14h", "16h", "18h", "20h"};
-                JComboBox comboBoxHeures = new JComboBox<>(boxHeures);
-                panelMovie[2].add(comboBoxHeures);
-
-                confirmBookMovie[2] = new JButton("Confirmer réservation");
-                panelMovie[2].add(confirmBookMovie[2]);
-
-                confirmBookMovie[2].addActionListener(e1 -> {
-                    if (e1.getSource() == confirmBookMovie[2]) {
-                        panelMovie[2].add(new JLabel("Votre ticket est réservé."));
-                        panelMovie[2].add(new JLabel("Le " + boxJours[comboBoxJours.getSelectedIndex()]));
-                        panelMovie[2].add(new JLabel("à " + boxHeures[comboBoxHeures.getSelectedIndex()]));
-                        panelMovie[2].add(new JLabel("À bientôt dans nos cinémas !"));
-                        panelMovie[2].setVisible(false);
-                        panelMovie[2].setVisible(true);
-                    }
-                });
-            }
-        });
-
-
-        setSize(600,400);
+        setSize(660,400);
         setVisible(true);
     }
 

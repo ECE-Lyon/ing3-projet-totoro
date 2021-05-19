@@ -3,7 +3,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MovieDaoImpl implements MovieDao{
+public class MovieDaoImpl implements MovieDao {
     private final Connection connection;
     public MovieDaoImpl(Connection connection) {
         this.connection = connection;

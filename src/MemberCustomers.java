@@ -1,10 +1,6 @@
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.SecureRandom;
-import java.security.NoSuchAlgorithmException;
+
 
 public class MemberCustomers {
-    public enum enumCategorieAge {REGULAR, SENIOR, CHILDREN}
     private String categorieAge;
     private String login;
     private String hash;
@@ -12,16 +8,7 @@ public class MemberCustomers {
     public MemberCustomers() {
 
     }
-    public MemberCustomers(String login, String hash) {
-        this.login = login;
-        this.hash = hash;
-    }
 
-    public MemberCustomers(String login, String hash, String categorieAge) {
-        this.login = login;
-        this.hash = hash;
-        this.categorieAge = categorieAge;
-    }
 
     public String getLogin() {
         return login;

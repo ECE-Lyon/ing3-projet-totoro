@@ -1,7 +1,5 @@
 public class Movie {
     private String title, url;
-    public enum enumGenre {ACTION, AVENTURE, COMEDIE, FAMILLE, DRAME, CATASTROPHE, POLICIER, DOCUMENTAIRE, FANTASTIQUE, HISTORIQUE, HORREUR, COMEDIE_MUSICALE, SCIENCE_FICTION, THRILLER, WESTERN}
-    private enumGenre genreE;
     private String date, genre;
     private Integer id, time;
 
