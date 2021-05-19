@@ -3,14 +3,7 @@ public class Movie {
     private String date, genre;
     private Integer id, time;
 
-    public Movie(){};
-
-    public Movie(String title, String date, Integer time, String genre) {
-        this.title = title;
-        this.date = date;
-        this.time = time;
-        this.genre = genre;
-    }
+    public Movie(){}
 
     public String getTitle() {
         return title;
