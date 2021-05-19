@@ -375,15 +375,11 @@ public class ApplicationFrameCustomers extends JFrame{
         setVisible(true);
     }
 
-
-
-    public static void main(String[] args) {
-        new ApplicationFrameCustomers();
-    }
-
     // Hashage des mots de passe pour les stocker nulle part en clair
+
     public static String hashPassword (String password) {
         try{
+
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(password.getBytes());
             byte[] hashedPassword = md.digest();
@@ -397,5 +393,12 @@ public class ApplicationFrameCustomers extends JFrame{
         }
         return "";
     }
+
+    public static void main(String[] args) {
+        new ApplicationFrameCustomers();
+    }
+
+
+
 
 }

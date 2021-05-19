@@ -132,6 +132,12 @@ public class ApplicationFrameEmployees extends JFrame{
                 movie.setTime(intTimeNewMovie);
                 movie.setUrl(urlNewMovie.getText());
                 movie.setGenre(genreNewMovie.getText());
+                idNewMovie.setText("");
+                titleNewMovie.setText("");
+                dateNewMovie.setText("");
+                timeNewMovie.setText("");
+                urlNewMovie.setText("");
+                genreNewMovie.setText("");
                 try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
                     MovieDao movieDao = new MovieDaoImpl(connection);
                     movieDao.add(movie);
@@ -151,6 +157,7 @@ public class ApplicationFrameEmployees extends JFrame{
                     MovieDao movieDao = new MovieDaoImpl(connection);
                     int intIdRemoveMovie = Integer.parseInt(idMovieRemove.getText());
                     movieDao.delete(intIdRemoveMovie);
+                    idMovieRemove.setText("");
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
