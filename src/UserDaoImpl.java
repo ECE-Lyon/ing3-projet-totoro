@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 
 public class UserDaoImpl implements UserDao{
@@ -12,9 +9,9 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public void add(MemberCustomers memberCustomers) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO utilisateur(login, mdp, categorieAge) VALUES (?,?,?)")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO utilisateur(login, hash, categorieAge) VALUES (?,?,?)")) {
             preparedStatement.setString(1, memberCustomers.getLogin());
-            preparedStatement.setString(2, memberCustomers.getPassword());
+            preparedStatement.setString(2, memberCustomers.getHash());
             preparedStatement.setString(3, memberCustomers.getCategorieAge());
             preparedStatement.execute();
         } catch (SQLException throwables) {
@@ -24,7 +21,7 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public MemberCustomers get(String log, String psw) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM utilisateur WHERE login=? AND mdp=?")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM utilisateur WHERE login=? AND hash=?")) {
             preparedStatement.setString(1, log);
             preparedStatement.setString(2, psw);
 
@@ -33,7 +30,7 @@ public class UserDaoImpl implements UserDao{
                     MemberCustomers memberCustomers = new MemberCustomers();
 
                     memberCustomers.setLogin(resultSet.getString("login"));
-                    memberCustomers.setPassword(resultSet.getString("mdp"));
+                    memberCustomers.setHash(resultSet.getString("hash"));
                     memberCustomers.setCategorieAge(resultSet.getString("categorieAge"));
                     return memberCustomers;
                 }
@@ -43,4 +40,5 @@ public class UserDaoImpl implements UserDao{
         }
         return null;
     }
+
 }

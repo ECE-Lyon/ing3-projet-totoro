@@ -1,20 +1,25 @@
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.SecureRandom;
+import java.security.NoSuchAlgorithmException;
+
 public class MemberCustomers {
     public enum enumCategorieAge {REGULAR, SENIOR, CHILDREN}
     private String categorieAge;
     private String login;
-    private String password;
+    private String hash;
 
     public MemberCustomers() {
 
     }
-    public MemberCustomers(String login, String password) {
+    public MemberCustomers(String login, String hash) {
         this.login = login;
-        this.password = password;
+        this.hash = hash;
     }
 
-    public MemberCustomers(String login, String password, String categorieAge) {
+    public MemberCustomers(String login, String hash, String categorieAge) {
         this.login = login;
-        this.password = password;
+        this.hash = hash;
         this.categorieAge = categorieAge;
     }
 
@@ -26,17 +31,18 @@ public class MemberCustomers {
         this.login = login;
     }
 
-    public String getPassword() {
-        return password;
+    public String getHash() {
+        return hash;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 
     public String getCategorieAge() {
         return categorieAge;
     }
+
 
     public void setCategorieAge(String categorieAge) {
         this.categorieAge = categorieAge;

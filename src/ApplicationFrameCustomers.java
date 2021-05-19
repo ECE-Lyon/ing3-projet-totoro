@@ -1,6 +1,10 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -197,7 +201,7 @@ public class ApplicationFrameCustomers extends JFrame{
             if(e.getSource() == submitCreationCompte) {
                 MC = new MemberCustomers();
                 MC.setLogin(newLogin.getText());
-                MC.setPassword(newPassword.getText());
+                MC.setHash(hashPassword(newPassword.getText()).toString());
                 int itemIndex = boxCategorieAge.getSelectedIndex();
                 MC.setCategorieAge(boxItems[itemIndex]);
                 try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
@@ -221,7 +225,7 @@ public class ApplicationFrameCustomers extends JFrame{
                 try (Connection connection = DriverManager.getConnection("jdbc:h2:./default")){
                     memberCustomersCheck = new MemberCustomers();
                     UserDao userDao = new UserDaoImpl(connection);
-                    memberCustomersCheck = userDao.get(login.getText(), password.getText());
+                    memberCustomersCheck = userDao.get(login.getText(), hashPassword(password.getText()).toString());
                     if(memberCustomersCheck == null) {
                         login.setText("");
                         password.setText("");
@@ -376,4 +380,22 @@ public class ApplicationFrameCustomers extends JFrame{
     public static void main(String[] args) {
         new ApplicationFrameCustomers();
     }
+
+    // Hashage des mots de passe pour les stocker nulle part en clair
+    public static String hashPassword (String password) {
+        try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes());
+            byte[] hashedPassword = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashedPassword){
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 }
