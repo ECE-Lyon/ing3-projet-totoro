@@ -1,10 +1,6 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -32,7 +28,7 @@ public class ApplicationFrameCustomers extends JFrame{
 
     public ApplicationFrameCustomers() {
 
-        //Connection avec la base de données des films
+        //Connexion avec la base de données des films
         movie1 = new Movie();
         movie2 = new Movie();
         movie3 = new Movie();
@@ -281,8 +277,6 @@ public class ApplicationFrameCustomers extends JFrame{
                         panelMovie[0].setVisible(true);
 
                     }
-
-
                 });
             }
         });
@@ -372,8 +366,8 @@ public class ApplicationFrameCustomers extends JFrame{
         setVisible(true);
     }
 
-    // Hashage des mots de passe pour les stocker nulle part en clair
 
+    // Hashage des mots de passe pour les stocker nulle part en clair
     public static String hashPassword (String password) {
         try{
 
@@ -391,11 +385,9 @@ public class ApplicationFrameCustomers extends JFrame{
         return "";
     }
 
+
+
     public static void main(String[] args) {
         new ApplicationFrameCustomers();
     }
-
-
-
-
 }
