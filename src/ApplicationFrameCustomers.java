@@ -1,10 +1,6 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -281,8 +277,6 @@ public class ApplicationFrameCustomers extends JFrame{
                         panelMovie[0].setVisible(true);
 
                     }
-
-
                 });
             }
         });
@@ -326,7 +320,6 @@ public class ApplicationFrameCustomers extends JFrame{
                 });
             }
 
-
         });
 
         //ActionListener pour réserver une séance pour le film 3
@@ -341,7 +334,6 @@ public class ApplicationFrameCustomers extends JFrame{
                 else{
                     panelMovie[2].add(new JLabel("Tarif " + memberCustomersCheck.getCategorieAge()));
                 }
-
 
                 panelMovie[2].add(new JLabel("Quel jour ?"));
                 String[] boxJours = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
@@ -364,7 +356,6 @@ public class ApplicationFrameCustomers extends JFrame{
                         panelMovie[2].add(new JLabel("À bientôt dans nos cinémas !"));
                         panelMovie[2].setVisible(false);
                         panelMovie[2].setVisible(true);
-
                     }
                 });
             }
@@ -381,7 +372,8 @@ public class ApplicationFrameCustomers extends JFrame{
         new ApplicationFrameCustomers();
     }
 
-    // Hashage des mots de passe pour les stocker nulle part en clair
+    
+    //Hashage des mots de passe pour les stocker nulle part en clair
     public static String hashPassword (String password) {
         try{
             MessageDigest md = MessageDigest.getInstance("MD5");

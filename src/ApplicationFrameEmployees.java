@@ -9,12 +9,12 @@ public class ApplicationFrameEmployees extends JFrame{
 
     //Déclaration des variables
     Movie movie;
-    JButton addMovie, removeMovie, confirmAddMovie, confirmRemoveMovie;
-    JTextField titleNewMovie, genreNewMovie, idNewMovie, dateNewMovie, timeNewMovie, urlNewMovie, idMovieRemove;
+    private final JButton addMovie, removeMovie, confirmAddMovie, confirmRemoveMovie;
+    private final JTextField titleNewMovie, genreNewMovie, idNewMovie, dateNewMovie, timeNewMovie, urlNewMovie, idMovieRemove;
     Container contentPane;
-    JPanel panelPrincipal, panelWelcome, panelLabelAjout, panelMenu, panelAddMovie,
+    JPanel panelPrincipal, panelWelcome, panelMenu, panelAddMovie,
             panelRemoveMovie, panelInfoMovie;
-    JLabel welcome, labelAjout;
+    private final JLabel welcome;
 
 
     public ApplicationFrameEmployees() {
